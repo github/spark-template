@@ -36,4 +36,7 @@ sudo mv ./package/* /workspaces/spark-tools
 sudo rmdir ./package
 rm -rf ./spark-sdk-dist
 
+cd /workspaces/spark-tools 
+npm i 
+cd /workspaces/spark-template
 npm i -f /workspaces/spark-tools

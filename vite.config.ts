@@ -8,8 +8,8 @@ import { defineConfig, PluginOption } from "vite";
 
 import { createLogToFileLogger } from "@github/spark/logToFileLogger";
 import { runtimeTelemetryPlugin } from "@github/spark/telemetryPlugin";
-import sparkAgent from "./spark-agent/src/server/vite-plugin";
-import { designerHost, tagSourcePlugin } from "./spark-designer/plugins";
+import sparkAgent from "@github/spark/agent-plugin";
+import { tagSourcePlugin, designerHost } from "@github/spark/designerPlugin";
 import createIconImportProxy from "@github/spark/vitePhosphorIconProxyPlugin";
 
 const extraPlugins: PluginOption[] = [];
@@ -83,7 +83,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      "@": "/workspaces/workbench-template/src"
+      "@": "/workspaces/spark-template/src"
     }
   },
   customLogger: createLogToFileLogger(),
