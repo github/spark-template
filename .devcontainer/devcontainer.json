@@ -12,10 +12,11 @@
     "postStartCommand": {
       "app": "USE_DESIGNER=true USE_SPARK_AGENT=true npm run dev",
       "ports": "gh cs ports visibility 5000:public -c $CODESPACE_NAME",
+      "spark-proxy": "proxy.js",
       "server": "spark-server",
       "spark-agent": "spark-agent",
-      // "spark-designer": "spark-designer",
-      "spark-file-syncer": "file-syncer.js 13000 >> /tmp/.spark-file-syncer.log 2>&1"
+      "spark-designer": "spark-designer",
+      "spark-file-syncer": "spark-file-syncer 13000 >> /tmp/.spark-file-syncer.log 2>&1"
     },
     "forwardPorts": [4000, 5000, 9000, 13000],
     "features": {

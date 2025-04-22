@@ -28,6 +28,9 @@ sudo mv ./spark-sdk-dist/server.js /usr/local/bin/spark-server
 sudo mv ./spark-sdk-dist/designer.js /usr/local/bin/spark-designer
 sudo mv ./spark-sdk-dist/file-syncer.js /usr/local/bin/spark-file-syncer
 sudo mv ./spark-sdk-dist/spark-agent.js /usr/local/bin/spark-agent
+sudo cp ./spark-sdk-dist/proxy.js /workspaces/proxy.js
+sudo mv ./spark-sdk-dist/proxy.js  /usr/local/bin/proxy.js
+
 
 tar -xzf ./spark-sdk-dist/spark-tools.tgz
 
