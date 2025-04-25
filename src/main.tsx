@@ -4,6 +4,10 @@ import "./main.css"
 import "./styles/theme.css"
 import "./index.css"
 
+if (import.meta.env.MODE == 'development') {
+    await import('@github/spark/initializeTelemetry.js');
+}
+
 import "@github/spark/llm"
 
 createRoot(document.getElementById('root')!).render(
