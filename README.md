@@ -1,3 +1,3 @@
-# Soark Template
+# Spark Template
 A template for Spark
     
