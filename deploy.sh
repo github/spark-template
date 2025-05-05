@@ -4,11 +4,11 @@ set -e
 
 echo "[--Build: Started--]"
 
-# Check Deploy Type
+# Check Revision name if exists
 REVISION_NAME=${1:-""} # Use the first argument or default to empty string
 echo "Revision name: $REVISION_NAME"
 
-# Set the output directory based on the deploy type
+# Set the output directory based on the revision name if provided
 if [ "$REVISION_NAME" != "" ]; then
   OUTPUT_DIR="${REVISION_NAME}-dist"
 else
