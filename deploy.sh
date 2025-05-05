@@ -5,29 +5,29 @@ set -e
 echo "[--Build: Started--]"
 
 # Check Deploy Type
-revision_name=${1:-""} # Use the first argument or default to empty string
-echo "Revision name: $revision_name"
+REVISION_NAME=${1:-""} # Use the first argument or default to empty string
+echo "Revision name: $REVISION_NAME"
 
 # Set the output directory based on the deploy type
-if [ "$revision_name" == "preview" ]; then
-  output_dir="preview-dist"
+if [ "$REVISION_NAME" != "" ]; then
+  OUTPUT_DIR="${REVISION_NAME}-dist"
 else
-  output_dir="dist"
+  OUTPUT_DIR="dist"
 fi
-echo "Output directory: $output_dir"
+echo "Output directory: $OUTPUT_DIR"
 
 # Clean up the output directory
 echo "Cleaning up the output directory..."
-rm -rf "$output_dir"
+rm -rf "$OUTPUT_DIR"
 
 # Build the frontend
 echo "Compiling frontend..."
 npm install -f # force because there is a known mismatch of shadcn and react 19 - https://ui.shadcn.com/docs/react-19
-OUTPUT_DIR="$output_dir" npm run build
+OUTPUT_DIR="$OUTPUT_DIR" npm run build
 
 echo "Copying extra files..."
-cp /workspaces/proxy.js "$output_dir/proxy.js"
-cp ./app.package.json "$output_dir/package.json"
+cp /workspaces/proxy.js "$OUTPUT_DIR/proxy.js"
+cp ./app.package.json "$OUTPUT_DIR/package.json"
 
 echo "[--Build: Complete--]"
 echo "Executing the deployment upload script"
@@ -50,8 +50,8 @@ fi
 
 echo "Deploying as ${GITHUB_USER} to ${GITHUB_RUNTIME_PERMANENT_NAME}"
 
-if [ "$revision_name" != "" ]; then
-  revision_flag="--revision-name $revision_name"
+if [ "$REVISION_NAME" != "" ]; then
+  revision_flag="--revision-name $REVISION_NAME"
 else
   revision_flag=""
 fi
@@ -64,7 +64,7 @@ gh runtime create \
 
 gh runtime deploy \
   --app ${GITHUB_RUNTIME_PERMANENT_NAME} \
-  --dir "$output_dir" \
+  --dir "$OUTPUT_DIR" \
   ${revision_flag} 
 
 # TODO: Update CLI to get revision app 
