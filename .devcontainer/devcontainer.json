@@ -23,18 +23,6 @@
       "ghcr.io/devcontainers/features/sshd:1": {
         "version": "latest"
       }
-    },
-    "customizations": {
-      "codespaces": {
-        "repositories": {
-          "github/gh-runtime-cli": {
-            "permissions": {
-              "contents": "read",
-              "packages": "read"
-            }
-          }
-        }
-      }
     }
   }
   

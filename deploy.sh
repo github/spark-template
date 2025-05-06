@@ -56,18 +56,18 @@ else
   revision_flag=""
 fi
 
-gh runtime create \
+gh spark create \
   --app ${GITHUB_RUNTIME_PERMANENT_NAME} \
   --env "GITHUB_RUNTIME_PERMANENT_NAME=${GITHUB_RUNTIME_PERMANENT_NAME}" \
   --secret "GITHUB_TOKEN=${GITHUB_TOKEN}" \
   ${revision_flag} 
 
-gh runtime deploy \
+gh spark deploy \
   --app ${GITHUB_RUNTIME_PERMANENT_NAME} \
   --dir "$OUTPUT_DIR" \
   ${revision_flag} 
 
-DEPLOYED_URL="$(gh runtime get --app ${GITHUB_RUNTIME_PERMANENT_NAME} ${revision_flag})"
+DEPLOYED_URL="$(gh spark get --app ${GITHUB_RUNTIME_PERMANENT_NAME} ${revision_flag})"
 
 echo "[--URL-App=[https://${DEPLOYED_URL}]--]"
 echo "[--Deployment: Complete--]"

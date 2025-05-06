@@ -12,34 +12,19 @@ echo "Installing the GitHub CLI"
   && sudo apt update \
   && sudo apt install gh inotify-tools -y
 
-echo "Installing the GitHub CLI Runtime extension"
-# if the GITHUB_USER is monalisa, then install the plugin from the local folder
-if [ "$GITHUB_USER" = "monalisa" ]; then
-  cd ./gh-runtime-cli
-  gh extension install .
-else
-  gh extension install github/gh-runtime-cli
-fi
+echo "Installing azcopy"
 
-echo "Adding an alias for the GitHub CLI Runtime extension"
-gh alias set runtime runtime-cli
+sudo wget -O /usr/local/bin/azcopytar https://aka.ms/downloadazcopy-v10-linux
+sudo tar -xvf /usr/local/bin/azcopytar -C /usr/local/bin/
+sudo rm /usr/local/bin/azcopytar
+azcopy_dir=$(find /usr/local/bin/ -type d -name "azcopy*" | head -n 1)
+sudo mv "$azcopy_dir/azcopy" /usr/local/bin/azcopy
+sudo rm -rf "$azcopy_dir"
 
-echo "Downloading the latest release of workbench-template from GitHub"
 
-GITHUB_PAT="$RELEASE_PAT"
-REPO="github/workbench-template"
-
-# Fetch the latest release information
-LATEST_RELEASE=$(curl -s -H "Authorization: token $GITHUB_PAT" https://api.github.com/repos/$REPO/releases/latest)
-
-# Extract the first browser_download_url from the assets
+LATEST_RELEASE=$(curl -s -H "Authorization: token $TEMPLATE_PAT" https://api.github.com/repos/github/spark-template/releases/latest)
 DOWNLOAD_URL=$(echo "$LATEST_RELEASE" | jq -r '.assets[0].url')
-echo "Download URL: $DOWNLOAD_URL"
-
-
-# Fetch the latest release information
-curl -L -o dist.zip -H "Authorization: token $GITHUB_PAT" -H "Accept: application/octet-stream" "$DOWNLOAD_URL"
-
+curl -L -o dist.zip -H "Authorization: token $TEMPLATE_PAT" -H "Accept: application/octet-stream" "$DOWNLOAD_URL"
 unzip -o dist.zip
 rm dist.zip
 
@@ -56,7 +41,13 @@ tar -xzf ./spark-sdk-dist/spark-tools.tgz
 mkdir -p /workspaces/spark-tools
 sudo mv ./package/* /workspaces/spark-tools
 sudo rmdir ./package
-rm -rf ./spark-sdk-dist
+
+sudo mv spark-sdk-dist/gh-spark-cli /usr/local/bin/
+cd /usr/local/bin/gh-spark-cli
+gh extension install .
+gh alias set spark spark-cli
+
+rm -rf /workspaces/spark-template/spark-sdk-dist
 
 cd /workspaces/spark-tools 
 npm i 
@@ -65,11 +56,3 @@ npm i -f /workspaces/spark-tools
 
 
 
-echo "Installing azcopy"
-
-sudo wget -O /usr/local/bin/azcopytar https://aka.ms/downloadazcopy-v10-linux
-sudo tar -xvf /usr/local/bin/azcopytar -C /usr/local/bin/
-sudo rm /usr/local/bin/azcopytar
-azcopy_dir=$(find /usr/local/bin/ -type d -name "azcopy*" | head -n 1)
-sudo mv "$azcopy_dir/azcopy" /usr/local/bin/azcopy
-sudo rm -rf "$azcopy_dir"

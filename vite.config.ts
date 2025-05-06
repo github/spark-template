@@ -44,7 +44,7 @@ export default defineConfig({
   define: {
     // ensure that you give these types in `src/vite-end.d.ts`
     GITHUB_RUNTIME_PERMANENT_NAME: JSON.stringify(GITHUB_RUNTIME_PERMANENT_NAME),
-    BASE_KV_SERVICE_URL: JSON.stringify("/kv"),
+    BASE_KV_SERVICE_URL: JSON.stringify("/_spark/kv"),
   },
   server: {
     port: 5000,
@@ -74,11 +74,11 @@ export default defineConfig({
       // Any new endpoints defined in the backend server need to be added here
       // as vite serves the frontend during local development and in the live preview,
       // and needs to know to proxy the endpoints to the backend server.
-      "/kv": {
+      "/_spark/kv": {
         target: "http://localhost:8000",
         changeOrigin: true,
       },
-      "/llm": {
+      "/_spark/llm": {
         target: "http://localhost:8000",
         changeOrigin: true,
       },
