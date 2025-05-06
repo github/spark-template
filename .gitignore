@@ -25,4 +25,4 @@ dist-ssr
 
 .env
 **/agent-eval-report*
-.spark-tools
+packages
