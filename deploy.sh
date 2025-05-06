@@ -67,7 +67,6 @@ gh runtime deploy \
   --dir "$OUTPUT_DIR" \
   ${revision_flag} 
 
-# TODO: Update CLI to get revision app 
 DEPLOYED_URL="$(gh runtime get --app ${GITHUB_RUNTIME_PERMANENT_NAME} ${revision_flag})"
 
 echo "[--URL-App=[https://${DEPLOYED_URL}]--]"
