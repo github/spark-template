@@ -5,7 +5,7 @@ set -e
 echo "[--Build: Started--]"
 
 # Check Revision name if exists
-REVISION_NAME=${1:-""} # Use the first argument or default to empty string
+REVISION_NAME=${REVISION_NAME:-""} # Use the env variable or default to empty string
 echo "Revision name: $REVISION_NAME"
 
 # Set the output directory based on the revision name if provided
