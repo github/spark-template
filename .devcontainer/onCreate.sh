@@ -62,3 +62,14 @@ cd /workspaces/spark-tools
 npm i 
 cd /workspaces/spark-template
 npm i -f /workspaces/spark-tools
+
+
+
+echo "Installing azcopy"
+
+sudo wget -O /usr/local/bin/azcopytar https://aka.ms/downloadazcopy-v10-linux
+sudo tar -xvf /usr/local/bin/azcopytar -C /usr/local/bin/
+sudo rm /usr/local/bin/azcopytar
+azcopy_dir=$(find /usr/local/bin/ -type d -name "azcopy*" | head -n 1)
+sudo mv "$azcopy_dir/azcopy" /usr/local/bin/azcopy
+sudo rm -rf "$azcopy_dir"
