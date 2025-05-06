@@ -38,16 +38,16 @@ fi
 
 echo "Deploying as ${GITHUB_USER} to ${GITHUB_RUNTIME_PERMANENT_NAME}"
 
-gh runtime create \
+gh spark create \
   --app ${GITHUB_RUNTIME_PERMANENT_NAME} \
   --env "GITHUB_RUNTIME_PERMANENT_NAME=${GITHUB_RUNTIME_PERMANENT_NAME}" \
   --secret "GITHUB_TOKEN=${GITHUB_TOKEN}" \
 
-gh runtime deploy \
+gh spark deploy \
   --app ${GITHUB_RUNTIME_PERMANENT_NAME} \
   --dir dist
 
-DEPLOYED_URL="$(gh runtime get --app ${GITHUB_RUNTIME_PERMANENT_NAME})"
+DEPLOYED_URL="$(gh spark get --app ${GITHUB_RUNTIME_PERMANENT_NAME})"
 
 echo "[--URL-App=[https://${DEPLOYED_URL}]--]"
 echo "[--Deployment: Complete--]"
