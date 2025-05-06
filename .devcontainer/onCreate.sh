@@ -49,10 +49,5 @@ gh alias set spark spark-cli
 
 rm -rf /workspaces/spark-template/spark-sdk-dist
 
-cd /workspaces/spark-tools 
-npm i 
 cd /workspaces/spark-template
-npm i -f /workspaces/spark-tools
-
-
-
+npm i
