@@ -38,8 +38,8 @@ sudo mv ./spark-sdk-dist/proxy.js  /usr/local/bin/proxy.js
 
 tar -xzf ./spark-sdk-dist/spark-tools.tgz
 
-mkdir -p /workspaces/spark-tools
-sudo mv ./package/* /workspaces/spark-tools
+mkdir -p /workspaces/spark-template/packages/spark-tools
+sudo mv ./package/* /workspaces/spark-template/packages/spark-tools
 sudo rmdir ./package
 
 sudo mv spark-sdk-dist/gh-spark-cli /usr/local/bin/
@@ -49,10 +49,5 @@ gh alias set spark spark-cli
 
 rm -rf /workspaces/spark-template/spark-sdk-dist
 
-cd /workspaces/spark-tools 
-npm i 
 cd /workspaces/spark-template
-npm i -f /workspaces/spark-tools
-
-
-
+npm i -f
