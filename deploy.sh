@@ -4,30 +4,18 @@ set -e
 
 echo "[--Build: Started--]"
 
-# Check Revision name if exists
-REVISION_NAME=${REVISION_NAME:-""} # Use the env variable or default to empty string
-echo "Revision name: $REVISION_NAME"
-
-# Set the output directory based on the revision name if provided
-if [ "$REVISION_NAME" != "" ]; then
-  OUTPUT_DIR="${REVISION_NAME}-dist"
-else
-  OUTPUT_DIR="dist"
-fi
-echo "Output directory: $OUTPUT_DIR"
-
-# Clean up the output directory
-echo "Cleaning up the output directory..."
-rm -rf "$OUTPUT_DIR"
+# Clean up the dist directory
+echo "Cleaning up the dist directory..."
+rm -rf dist
 
 # Build the frontend
 echo "Compiling frontend..."
 npm install -f # force because there is a known mismatch of shadcn and react 19 - https://ui.shadcn.com/docs/react-19
-OUTPUT_DIR="$OUTPUT_DIR" npm run build
+npm run build
 
 echo "Copying extra files..."
-cp /workspaces/proxy.js "$OUTPUT_DIR/proxy.js"
-cp ./app.package.json "$OUTPUT_DIR/package.json"
+cp /workspaces/proxy.js ./dist/proxy.js
+cp ./app.package.json ./dist/package.json
 
 echo "[--Build: Complete--]"
 echo "Executing the deployment upload script"
@@ -50,24 +38,16 @@ fi
 
 echo "Deploying as ${GITHUB_USER} to ${GITHUB_RUNTIME_PERMANENT_NAME}"
 
-if [ "$REVISION_NAME" != "" ]; then
-  revision_flag="--revision-name $REVISION_NAME"
-else
-  revision_flag=""
-fi
-
 gh spark create \
   --app ${GITHUB_RUNTIME_PERMANENT_NAME} \
   --env "GITHUB_RUNTIME_PERMANENT_NAME=${GITHUB_RUNTIME_PERMANENT_NAME}" \
   --secret "GITHUB_TOKEN=${GITHUB_TOKEN}" \
-  ${revision_flag} 
 
 gh spark deploy \
   --app ${GITHUB_RUNTIME_PERMANENT_NAME} \
-  --dir "$OUTPUT_DIR" \
-  ${revision_flag} 
+  --dir dist
 
-DEPLOYED_URL="$(gh spark get --app ${GITHUB_RUNTIME_PERMANENT_NAME} ${revision_flag})"
+DEPLOYED_URL="$(gh spark get --app ${GITHUB_RUNTIME_PERMANENT_NAME})"
 
 echo "[--URL-App=[https://${DEPLOYED_URL}]--]"
 echo "[--Deployment: Complete--]"
