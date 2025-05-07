@@ -10,8 +10,8 @@
   "onCreateCommand": ".devcontainer/onCreate.sh",
   // Runs automatically every time the dev container has been (re-)started
   "postStartCommand": {
-    "ports": "gh cs ports visibility 5000:public -c $CODESPACE_NAME",
-    "tools": ".devcontainer/postStartCommand.sh"
+    "tools": ".devcontainer/postStartCommand.sh",
+    "noop": ":"
   },
   "forwardPorts": [
     4000,

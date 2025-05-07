@@ -25,7 +25,7 @@ fi
 echo "New version found. Downloading latest release."
 
 DOWNLOAD_URL=$(echo "$LATEST_RELEASE" | jq -r '.assets[0].url')
-curl -L -o dist.zip -H "Authorization: token $GITHUB_PAT" -H "Accept: application/octet-stream" "$DOWNLOAD_URL"
+curl -L -o dist.zip -H "Authorization: token $TEMPLATE_PAT" -H "Accept: application/octet-stream" "$DOWNLOAD_URL"
 
 unzip -o dist.zip
 rm dist.zip
@@ -56,6 +56,7 @@ else
     sudo cp ./spark-sdk-dist/spark-tools-version "$TOOLS_MARKER_FILE"
 fi
 
+sudo rm -rf /usr/local/bin/gh-spark-cli
 sudo mv spark-sdk-dist/gh-spark-cli /usr/local/bin/
 cd /usr/local/bin/gh-spark-cli
 gh extension install .
