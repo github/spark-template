@@ -38,6 +38,9 @@ export default defineConfig({
     runtimeTelemetryPlugin(),
     ...extraPlugins,
   ],
+  build: {
+    outDir: process.env.OUTPUT_DIR || 'dist'
+  },
   define: {
     // ensure that you give these types in `src/vite-end.d.ts`
     GITHUB_RUNTIME_PERMANENT_NAME: JSON.stringify(GITHUB_RUNTIME_PERMANENT_NAME),
