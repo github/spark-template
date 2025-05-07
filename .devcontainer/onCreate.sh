@@ -12,18 +12,6 @@ echo "Installing the GitHub CLI"
   && sudo apt update \
   && sudo apt install gh inotify-tools -y
 
-echo "Installing the GitHub CLI Runtime extension"
-# if the GITHUB_USER is monalisa, then install the plugin from the local folder
-if [ "$GITHUB_USER" = "monalisa" ]; then
-  cd ./gh-runtime-cli
-  gh extension install .
-else
-  gh extension install github/gh-runtime-cli
-fi
-
-echo "Adding an alias for the GitHub CLI Runtime extension"
-gh alias set runtime runtime-cli
-
 echo "Installing azcopy"
 
 sudo wget -O /usr/local/bin/azcopytar https://aka.ms/downloadazcopy-v10-linux

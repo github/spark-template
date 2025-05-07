@@ -10,6 +10,7 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+*-dist
 *.local
 
 # Editor directories and files
@@ -25,4 +26,4 @@ dist-ssr
 
 .env
 **/agent-eval-report*
-.spark-tools
+packages

@@ -2,13 +2,7 @@
 
 set -e
 
-echo "Upgrading the Runtime CLI extension"
-gh extension upgrade runtime-cli
-
 echo "Checking for updates to workbench-template from GitHub"
-
-GITHUB_PAT="$RELEASE_PAT"
-REPO="github/workbench-template"
 
 MARKER_DIR="/var/lib/spark/.versions"
 RELEASE_MARKER_FILE="$MARKER_DIR/release"
@@ -17,7 +11,7 @@ TOOLS_MARKER_FILE="$MARKER_DIR/tools"
 sudo mkdir -p "$MARKER_DIR"
 
 # Fetch the latest release information
-LATEST_RELEASE=$(curl -s -H "Authorization: token $GITHUB_PAT" https://api.github.com/repos/$REPO/releases/latest)
+LATEST_RELEASE=$(curl -s -H "Authorization: token $TEMPLATE_PAT" https://api.github.com/repos/github/spark-template/releases/latest)
 
 # Extract the release ID to use as marker
 RELEASE_ID=$(echo "$LATEST_RELEASE" | jq -r '.id')
@@ -30,11 +24,7 @@ fi
 
 echo "New version found. Downloading latest release."
 
-# Extract the first browser_download_url from the assets
 DOWNLOAD_URL=$(echo "$LATEST_RELEASE" | jq -r '.assets[0].url')
-echo "Download URL: $DOWNLOAD_URL"
-
-# Fetch the latest release information
 curl -L -o dist.zip -H "Authorization: token $GITHUB_PAT" -H "Accept: application/octet-stream" "$DOWNLOAD_URL"
 
 unzip -o dist.zip
@@ -65,6 +55,11 @@ else
 
     sudo cp ./spark-sdk-dist/spark-tools-version "$TOOLS_MARKER_FILE"
 fi
+
+sudo mv spark-sdk-dist/gh-spark-cli /usr/local/bin/
+cd /usr/local/bin/gh-spark-cli
+gh extension install .
+gh alias set spark spark-cli --clobber
 
 rm -rf ./spark-sdk-dist
 
