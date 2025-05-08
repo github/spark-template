@@ -21,34 +21,8 @@ azcopy_dir=$(find /usr/local/bin/ -type d -name "azcopy*" | head -n 1)
 sudo mv "$azcopy_dir/azcopy" /usr/local/bin/azcopy
 sudo rm -rf "$azcopy_dir"
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+"$SCRIPT_DIR/refreshTools.sh"
 
-LATEST_RELEASE=$(curl -s -H "Authorization: token $TEMPLATE_PAT" https://api.github.com/repos/github/spark-template/releases/latest)
-DOWNLOAD_URL=$(echo "$LATEST_RELEASE" | jq -r '.assets[0].url')
-curl -L -o dist.zip -H "Authorization: token $TEMPLATE_PAT" -H "Accept: application/octet-stream" "$DOWNLOAD_URL"
-unzip -o dist.zip
-rm dist.zip
-
-sudo mv ./spark-sdk-dist/server.js /usr/local/bin/spark-server
-sudo mv ./spark-sdk-dist/designer.js /usr/local/bin/spark-designer
-sudo mv ./spark-sdk-dist/upload-to-remote.sh /usr/local/bin/upload-to-remote.sh
-sudo mv ./spark-sdk-dist/deploy.sh /usr/local/bin/deploy.sh
-sudo mv ./spark-sdk-dist/file-syncer.js /usr/local/bin/spark-file-syncer
-sudo mv ./spark-sdk-dist/spark-agent.js /usr/local/bin/spark-agent
-sudo cp ./spark-sdk-dist/proxy.js /workspaces/proxy.js
-sudo mv ./spark-sdk-dist/proxy.js  /usr/local/bin/proxy.js
-
-tar -xzf ./spark-sdk-dist/spark-tools.tgz
-
-mkdir -p /workspaces/spark-template/packages/spark-tools
-sudo mv ./package/* /workspaces/spark-template/packages/spark-tools
-sudo rmdir ./package
-
-sudo mv spark-sdk-dist/gh-spark-cli /usr/local/bin/
-cd /usr/local/bin/gh-spark-cli
-gh extension install .
-gh alias set spark spark-cli
-
-rm -rf /workspaces/spark-template/spark-sdk-dist
-
-cd /workspaces/spark-template
-npm i -f
+echo "Pre-starting the server and generating the optimized assets"
+npm run optimize --override
