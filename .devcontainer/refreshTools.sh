@@ -65,6 +65,7 @@ cd /usr/local/bin/gh-spark-cli
 gh extension remove spark-cli >/dev/null || true
 gh extension install .
 gh alias set spark spark-cli --clobber
+cd -
 
 rm -rf ./spark-sdk-dist
 
