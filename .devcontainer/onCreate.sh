@@ -23,3 +23,6 @@ sudo rm -rf "$azcopy_dir"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 "$SCRIPT_DIR/refreshTools.sh"
+
+echo "Pre-starting the server and generating the optimized assets"
+npm run optimize --override
