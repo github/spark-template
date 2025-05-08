@@ -20,3 +20,6 @@ sudo rm /usr/local/bin/azcopytar
 azcopy_dir=$(find /usr/local/bin/ -type d -name "azcopy*" | head -n 1)
 sudo mv "$azcopy_dir/azcopy" /usr/local/bin/azcopy
 sudo rm -rf "$azcopy_dir"
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+"$SCRIPT_DIR/refreshTools.sh"
