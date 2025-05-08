@@ -19,10 +19,10 @@
       "spark-file-syncer": "spark-file-syncer 13000 >> /tmp/.spark-file-syncer.log 2>&1"
     },
     "customizations": {
-		"codespaces": { 
-			"onStopCommand": "REVISION_NAME='spark-preview' /usr/local/bin/deploy.sh" 
-		}
-	},
+	    "codespaces": { 
+		    "onStopCommand": "REVISION_NAME='spark-preview' /usr/local/bin/deploy.sh" 
+	    }
+    },
     "forwardPorts": [4000, 5000, 9000, 13000],
     "features": {
       "ghcr.io/devcontainers/features/sshd:1": {
@@ -30,4 +30,3 @@
       }
     }
   }
-  
