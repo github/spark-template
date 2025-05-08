@@ -15,7 +15,7 @@
   },
   "customizations": {
     "codespaces": { 
-      "onStopCommand": "REVISION_NAME='spark-preview' /usr/local/bin/deploy.sh"
+      "onStopCommand": "REVISION_NAME=spark-preview /usr/local/bin/deploy.sh"
     }
   },
   "forwardPorts": [
