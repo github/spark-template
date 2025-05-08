@@ -11,7 +11,7 @@
   // Runs automatically every time the dev container has been (re-)started
   "postStartCommand": {
     "tools": ".devcontainer/postStartCommand.sh",
-    "noop": ":"
+    "welcome-mat": "echo Welcome to Spark!"
   },
   "forwardPorts": [
     4000,
