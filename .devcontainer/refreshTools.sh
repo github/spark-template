@@ -4,6 +4,8 @@ set -e
 
 echo "Checking for updates to workbench-template from GitHub"
 
+WORKSPACE_DIR="/workspaces/spark-template"
+
 MARKER_DIR="/var/lib/spark/.versions"
 RELEASE_MARKER_FILE="$MARKER_DIR/release"
 TOOLS_MARKER_FILE="$MARKER_DIR/tools"
@@ -22,7 +24,8 @@ fi
 
 echo "New version found. Downloading latest release."
 
-cd /workspaces/spark-template
+TEMP_DIR=$(mktemp -d)
+cd $TEMP_DIR
 
 DOWNLOAD_URL=$(echo "$LATEST_RELEASE" | jq -r '.assets[0].url')
 curl -L -o dist.zip -H "Authorization: token $TEMPLATE_PAT" -H "Accept: application/octet-stream" "$DOWNLOAD_URL"
@@ -46,12 +49,14 @@ if [ -f "$TOOLS_MARKER_FILE" ] && [ "$(cat "$TOOLS_MARKER_FILE")" == "$(cat ./sp
 else
     tar -xzf ./spark-sdk-dist/spark-tools.tgz
 
-    sudo rm -rf ./packages/spark-tools
-    mkdir -p ./packages/spark-tools
-    sudo mv ./package/* ./packages/spark-tools
+    sudo rm -rf $WORKSPACE_DIR/packages/spark-tools
+    mkdir -p $WORKSPACE_DIR/packages/spark-tools
+    sudo mv ./package/* $WORKSPACE_DIR/packages/spark-tools
     sudo rmdir ./package
 
+    cd $WORKSPACE_DIR
     npm i -f
+    cd - >/dev/null
 
     sudo cp ./spark-sdk-dist/spark-tools-version "$TOOLS_MARKER_FILE"
 fi
@@ -65,9 +70,9 @@ cd /usr/local/bin/gh-spark-cli
 gh extension remove spark-cli >/dev/null || true
 gh extension install .
 gh alias set spark spark-cli --clobber
-cd -
+cd - >/dev/null
 
-rm -rf ./spark-sdk-dist
+rm -rf $TEMP_DIR
 
 # Update marker file with latest release ID
 echo "$RELEASE_ID" | sudo tee "$RELEASE_MARKER_FILE" > /dev/null
