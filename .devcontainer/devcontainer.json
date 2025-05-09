@@ -10,7 +10,7 @@
   },
   "customizations": {
     "codespaces": { 
-      "onStopCommand": "GH_TOKEN=$GH_TOKEN REVISION_NAME=spark-preview /usr/local/bin/deploy.sh"
+      "onStopCommand": "REVISION_NAME=spark-preview /usr/local/bin/deploy.sh"
     }
   },
   "forwardPorts": [
