@@ -13,6 +13,11 @@
     "tools": ".devcontainer/postStartCommand.sh",
     "welcome-mat": "echo Welcome to Spark!"
   },
+  "customizations": {
+    "codespaces": { 
+      "onStopCommand": "REVISION_NAME=spark-preview /usr/local/bin/deploy.sh"
+    }
+  },
   "forwardPorts": [
     4000,
     5000,
