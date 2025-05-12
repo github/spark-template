@@ -51,6 +51,9 @@ export default defineConfig({
     hmr: {
       overlay: false,
     },
+    cors: {
+      origin: /^https?:\/\/(?:(?:[^:]+\.)?localhost|127\.0\.0\.1|\[::1\]|(?:.*\.)?github\.com)(?::\d+)?$/
+    },
     watch: {
       ignored: ["**/prd.md", "**.log"],
       awaitWriteFinish: {
