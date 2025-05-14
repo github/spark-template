@@ -8,7 +8,6 @@ sudo cp .devcontainer/spark.conf /etc/supervisor/conf.d/
 sudo chown $current_user /var/run/supervisor.sock
 sudo chown $current_user /var/log/supervisor
 
-service supervisor start
+supervisor start
 supervisorctl reread
 supervisorctl update
-
