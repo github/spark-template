@@ -14,19 +14,6 @@ import createIconImportProxy from "@github/spark/vitePhosphorIconProxyPlugin";
 
 const extraPlugins: PluginOption[] = [];
 
-if (process.env.USE_DESIGNER === "true") {
-  // Even though these types are exactly the type of our array, technically the types are coming
-  // from different versions of the same package, so we need to cast them to **this** package's type.
-  // Notice that it's coming from the `spark-designer` folder, which is a different package
-  // that includes its own version of `vite`.
-  extraPlugins.push([tagSourcePlugin() as PluginOption, designerHost() as PluginOption]);
-}
-
-if (process.env.USE_SPARK_AGENT === "true") {
-  // See above comment about the type casting.
-  extraPlugins.push(sparkAgent({ serverURL: process.env.SPARK_AGENT_URL }) as PluginOption);
-}
-
 const GITHUB_RUNTIME_PERMANENT_NAME = process.env.GITHUB_RUNTIME_PERMANENT_NAME || process.env.CODESPACE_NAME?.substring(0, 20);
 
 // https://vite.dev/config/
@@ -36,7 +23,9 @@ export default defineConfig({
     react(),
     tailwindcss(),
     runtimeTelemetryPlugin(),
-    ...extraPlugins,
+    sparkAgent({ serverURL: process.env.SPARK_AGENT_URL }) as PluginOption,
+    tagSourcePlugin() as PluginOption, 
+    designerHost() as PluginOption,
   ],
   build: {
     outDir: process.env.OUTPUT_DIR || 'dist'
