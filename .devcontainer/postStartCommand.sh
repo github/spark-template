@@ -5,7 +5,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 sudo cp .devcontainer/spark.conf /etc/supervisor/conf.d/
 
-sudo chown node /var/run/supervisor.sock
+sudo chown node /var/run/
 sudo chown node /var/log/supervisor
 
 supervisord
