@@ -3,9 +3,13 @@
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 "$SCRIPT_DIR/refreshTools.sh"
 
-sudo cp .devcontainer/spark.conf /etc/supervisor/conf.d/
+USE_DESIGNER=true USE_SPARK_AGENT=true npm run dev &
+proxy.js &
+spark-server &
+spark-agent &
+spark-designer &
+spark-file-syncer 13000 >> /tmp/.spark-file-syncer.log 2>&1 &
 
-sudo service supervisor start
-sudo supervisorctl reread
-sudo supervisorctl update
+echo "Spark tools started successfully"
 
+wait
