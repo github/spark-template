@@ -28,4 +28,4 @@ echo "Pre-starting the server and generating the optimized assets"
 npm run optimize --override
 
 echo "Installing supervisor"
-sudo apt update && sudo apt install -y supervisor
+sudo apt-get update && sudo apt-get install -y supervisor
