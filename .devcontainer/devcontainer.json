@@ -9,10 +9,7 @@
   // Runs automatically after Prebuild Template environment is created.
   "onCreateCommand": ".devcontainer/onCreate.sh",
   // Runs automatically every time the dev container has been (re-)started
-  "postStartCommand": {
-    "tools": ".devcontainer/postStartCommand.sh",
-    "welcome-mat": "echo Welcome to Spark!"
-  },
+  "postStartCommand": ".devcontainer/postStartCommand.sh",
   "customizations": {
     "codespaces": { 
       "onStopCommand": "REVISION_NAME=spark-preview /usr/local/bin/deploy.sh"
