@@ -27,3 +27,4 @@ dist-ssr
 .env
 **/agent-eval-report*
 packages
+.spark-initial-sha
