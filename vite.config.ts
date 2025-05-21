@@ -74,6 +74,10 @@ export default defineConfig({
         target: "http://localhost:8000",
         changeOrigin: true,
       },
+      "/_spark/user": {
+        target: "http://localhost:8000",
+        changeOrigin: true,
+      },
     },
   },
   resolve: {
