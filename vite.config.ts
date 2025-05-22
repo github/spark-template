@@ -11,10 +11,12 @@ import { runtimeTelemetryPlugin } from "@github/spark/telemetryPlugin";
 import sparkAgent from "@github/spark/agent-plugin";
 import { tagSourcePlugin, designerHost } from "@github/spark/designerPlugin";
 import createIconImportProxy from "@github/spark/vitePhosphorIconProxyPlugin";
+import { resolve } from 'path'
 
 const extraPlugins: PluginOption[] = [];
 
 const GITHUB_RUNTIME_PERMANENT_NAME = process.env.GITHUB_RUNTIME_PERMANENT_NAME || process.env.CODESPACE_NAME?.substring(0, 20);
+const projectRoot = process.env.PROJECT_ROOT || "/workspaces/spark-template"
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -82,7 +84,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      "@": "/workspaces/spark-template/src"
+      '@': resolve(projectRoot, 'src')
     }
   },
   customLogger: createLogToFileLogger(),
