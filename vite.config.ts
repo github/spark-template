@@ -16,7 +16,7 @@ import { resolve } from 'path'
 const extraPlugins: PluginOption[] = [];
 
 const GITHUB_RUNTIME_PERMANENT_NAME = process.env.GITHUB_RUNTIME_PERMANENT_NAME || process.env.CODESPACE_NAME?.substring(0, 20);
-const projectRoot = process.env.PROJECT_ROOT || "/workspaces/spark-template/src"
+const projectRoot = process.env.PROJECT_ROOT || "/workspaces/spark-template"
 
 // https://vite.dev/config/
 export default defineConfig({
