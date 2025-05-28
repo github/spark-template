@@ -27,7 +27,7 @@ export function DatePicker({
   trigger?: React.ReactElement
   date: Date
   onChange: (date: Date) => void
-} & React.ComponentType<typeof Calendar>) {
+} & React.ComponentProps<typeof Calendar>) {
   return (
     <Popover>
       <PopoverTrigger asChild>
