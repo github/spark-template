@@ -25,7 +25,7 @@ export function DatePicker({
   ...props
 }: {
   trigger?: React.ReactElement
-  date: Date
+  date?: Date
   onChange: (date: Date) => void
 } & React.ComponentProps<typeof Calendar>) {
   return (
