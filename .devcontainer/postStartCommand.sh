@@ -18,4 +18,4 @@ supervisord
 supervisorctl reread
 supervisorctl update
 
-npm i
+npm i 
