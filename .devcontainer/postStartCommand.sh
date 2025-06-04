@@ -17,5 +17,3 @@ sudo chown -R node /var/log/
 supervisord
 supervisorctl reread
 supervisorctl update
-
-npm i 
