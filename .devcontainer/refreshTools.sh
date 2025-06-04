@@ -38,6 +38,7 @@ sudo mv ./spark-sdk-dist/server.js /usr/local/bin/spark-server
 sudo mv ./spark-sdk-dist/designer.js /usr/local/bin/spark-designer
 sudo mv ./spark-sdk-dist/upload-to-remote.sh /usr/local/bin/upload-to-remote.sh
 sudo mv ./spark-sdk-dist/deploy.sh /usr/local/bin/deploy.sh
+sudo mv ./spark-sdk-dist/hydrate.sh /usr/local/bin/hydrate.sh
 sudo mv ./spark-sdk-dist/file-syncer.js /usr/local/bin/spark-file-syncer
 sudo mv ./spark-sdk-dist/spark-agent.js /usr/local/bin/spark-agent
 sudo cp ./spark-sdk-dist/proxy.js /workspaces/proxy.js
