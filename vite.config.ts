@@ -16,6 +16,7 @@ import { resolve } from 'path'
 const extraPlugins: PluginOption[] = [];
 
 const GITHUB_RUNTIME_PERMANENT_NAME = process.env.GITHUB_RUNTIME_PERMANENT_NAME || process.env.CODESPACE_NAME?.substring(0, 20);
+const GITHUB_API_URL = process.env.GITHUB_API_URL || "https://api.github.com";
 const projectRoot = process.env.PROJECT_ROOT || import.meta.dirname
 
 // https://vite.dev/config/
@@ -68,21 +69,23 @@ export default defineConfig({
         "./src/styles/theme.css",
       ],
     },
-    proxy: {
-      // Any new endpoints defined in the backend server need to be added here
-      // as vite serves the frontend during local development and in the live preview,
-      // and needs to know to proxy the endpoints to the backend server.
-      "/_spark/kv": {
-        target: "http://localhost:8000",
+    proxy: {      
+      "/_spark/**": {
+        target: GITHUB_API_URL,
         changeOrigin: true,
-      },
-      "/_spark/llm": {
-        target: "http://localhost:8000",
-        changeOrigin: true,
-      },
-      "/_spark/user": {
-        target: "http://localhost:8000",
-        changeOrigin: true,
+        rewrite: (path) => {
+          // Extract the service name (kv, llm, user) from the path
+          const serviceName = path.replace("/_spark/", "").split("/")[0];
+          return path.replace(`/_spark/${serviceName}`, `/runtime/${GITHUB_RUNTIME_PERMANENT_NAME}/${serviceName}`);
+        },
+        configure: (proxy, options) => {
+          proxy.on('proxyReq', (proxyReq, req, res) => {
+            // Add GitHub token authentication
+            if (process.env.GITHUB_TOKEN) {
+              proxyReq.setHeader('Authorization', `token ${process.env.GITHUB_TOKEN}`);
+            }
+          });
+        },
       },
     },
   },
