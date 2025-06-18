@@ -46,7 +46,11 @@ export default defineConfig({
       origin: /^https?:\/\/(?:(?:[^:]+\.)?localhost|127\.0\.0\.1|\[::1\]|(?:.*\.)?github\.com)(?::\d+)?$/
     },
     watch: {
-      ignored: ["**/prd.md", "**.log"],
+      ignored: [
+        "**/prd.md", 
+        "**.log", 
+        "**/.azcopy/**",
+      ],
       awaitWriteFinish: {
         pollInterval: 50,
         stabilityThreshold: 100,
