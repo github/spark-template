@@ -49,7 +49,7 @@ export default defineConfig({
       ignored: [
         "**/prd.md", 
         "**.log", 
-        "**/.azcopy/*",
+        "**/.azcopy/**",
       ],
       awaitWriteFinish: {
         pollInterval: 50,
