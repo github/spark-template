@@ -71,7 +71,7 @@ export default defineConfig({
     proxy: {
       // This proxies everything under /_spark to our backend servers.
       // This is used in local development and in the live preview.
-      // Deployed sparks route through ACA for /_spark.k
+      // Deployed sparks route through ACA for /_spark.
       "^/_spark/.*": {
         target: "http://localhost:8000",
         changeOrigin: true,
