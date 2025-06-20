@@ -69,21 +69,13 @@ export default defineConfig({
       ],
     },
     proxy: {
-      // Any new endpoints defined in the backend server need to be added here
-      // as vite serves the frontend during local development and in the live preview,
-      // and needs to know to proxy the endpoints to the backend server.
-      "/_spark/kv": {
+      // This proxies everything under /_spark to our backend servers.
+      // This is used in local development and in the live preview.
+      // Deployed sparks route through ACA for /_spark.k
+      "^/_spark/.*": {
         target: "http://localhost:8000",
         changeOrigin: true,
-      },
-      "/_spark/llm": {
-        target: "http://localhost:8000",
-        changeOrigin: true,
-      },
-      "/_spark/user": {
-        target: "http://localhost:8000",
-        changeOrigin: true,
-      },
+      }
     },
   },
   resolve: {
