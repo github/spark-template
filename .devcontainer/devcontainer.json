@@ -12,7 +12,7 @@
   "postStartCommand": ".devcontainer/postStartCommand.sh",
   "customizations": {
     "codespaces": { 
-      "onStopCommand": "REVISION_NAME=spark-preview /usr/local/bin/deploy.sh"
+      "onStopCommand": "/usr/local/bin/shutdown.sh"
     }
   },
   "forwardPorts": [
