@@ -12,7 +12,7 @@
   "postStartCommand": ".devcontainer/postStartCommand.sh",
   "customizations": {
     "codespaces": { 
-      "onStopCommand": "/usr/local/bin/shutdown.sh"
+      "onStopCommand": "shutdown.sh"
     }
   },
   "forwardPorts": [
