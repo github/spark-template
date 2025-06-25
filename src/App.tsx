@@ -1,5 +1,5 @@
 function App() {
-    return <div>Hello commit</div>
+    return <div></div>
 }
 
 export default App
