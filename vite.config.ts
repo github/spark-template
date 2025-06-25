@@ -13,11 +13,17 @@ import { tagSourcePlugin, designerHost } from "@github/spark/designerPlugin";
 import createIconImportProxy from "@github/spark/vitePhosphorIconProxyPlugin";
 import { resolve } from 'path'
 
-const extraPlugins: PluginOption[] = [];
-
-const GITHUB_RUNTIME_PERMANENT_NAME = process.env.GITHUB_RUNTIME_PERMANENT_NAME || process.env.CODESPACE_NAME?.substring(0, 20);
+const GITHUB_RUNTIME_PERMANENT_NAME = process.env.GITHUB_RUNTIME_PERMANENT_NAME
 const GITHUB_API_URL = process.env.GITHUB_API_URL || "https://api.github.com";
 const projectRoot = process.env.PROJECT_ROOT || import.meta.dirname
+
+const addGitHubAuth = (proxy, options) => {
+  proxy.on('proxyReq', (proxyReq, req, res) => {
+    if (process.env.GITHUB_TOKEN) {
+      proxyReq.setHeader('Authorization', `bearer ${process.env.GITHUB_TOKEN}`);
+    }
+  });
+};
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -70,35 +76,28 @@ export default defineConfig({
       ],
     },
     proxy: {      
+      "^/_spark/kv": {
+        target: GITHUB_API_URL,
+        changeOrigin: true,
+        rewrite: (path) => {
+          return path.replace(/^\/_spark\/kv/, `/runtime/${GITHUB_RUNTIME_PERMANENT_NAME}/kv`);
+        },
+        configure: addGitHubAuth
+      },
       "^/_spark/llm": {
         target: "https://models.github.ai/inference/chat/completions",
         changeOrigin: true,
         ignorePath: true,
-        configure: (proxy, options) => {
-          proxy.on('proxyReq', (proxyReq, req, res) => {
-            // Add GitHub token authentication
-            if (process.env.GITHUB_TOKEN) {
-              proxyReq.setHeader('Authorization', `bearer ${process.env.GITHUB_TOKEN}`);
-            }
-          });
-        }
+        configure: addGitHubAuth
       },
       "^/_spark/.*": {
         target: GITHUB_API_URL,
         changeOrigin: true,
         rewrite: (path) => {
-          // Extract the service name (kv, llm, user) from the path
           const serviceName = path.replace("/_spark/", "").split("/")[0];
           return path.replace(`/_spark/${serviceName}`, `/runtime/${GITHUB_RUNTIME_PERMANENT_NAME}/${serviceName}`);
         },
-        configure: (proxy, options) => {
-          proxy.on('proxyReq', (proxyReq, req, res) => {
-            // Add GitHub token authentication
-            if (process.env.GITHUB_TOKEN) {
-              proxyReq.setHeader('Authorization', `token ${process.env.GITHUB_TOKEN}`);
-            }
-          });
-        }
+        configure: addGitHubAuth
       }
     },
   },
