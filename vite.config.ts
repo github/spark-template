@@ -75,15 +75,7 @@ export default defineConfig({
         "./src/styles/theme.css",
       ],
     },
-    proxy: {      
-      "^/_spark/kv": {
-        target: GITHUB_API_URL,
-        changeOrigin: true,
-        rewrite: (path) => {
-          return path.replace(/^\/_spark\/kv/, `/runtime/${GITHUB_RUNTIME_PERMANENT_NAME}/kv`);
-        },
-        configure: addGitHubAuth
-      },
+    proxy: {            
       "^/_spark/llm": {
         target: "https://models.github.ai/inference/chat/completions",
         changeOrigin: true,
