@@ -70,7 +70,20 @@ export default defineConfig({
       ],
     },
     proxy: {      
-      "/_spark/**": {
+      "^/_spark/llm": {
+        target: "https://models.github.ai/inference/chat/completions",
+        changeOrigin: true,
+        ignorePath: true,
+        configure: (proxy, options) => {
+          proxy.on('proxyReq', (proxyReq, req, res) => {
+            // Add GitHub token authentication
+            if (process.env.GITHUB_TOKEN) {
+              proxyReq.setHeader('Authorization', `bearer ${process.env.GITHUB_TOKEN}`);
+            }
+          });
+        }
+      },
+      "^/_spark/.*": {
         target: GITHUB_API_URL,
         changeOrigin: true,
         rewrite: (path) => {
@@ -85,8 +98,8 @@ export default defineConfig({
               proxyReq.setHeader('Authorization', `token ${process.env.GITHUB_TOKEN}`);
             }
           });
-        },
-      },
+        }
+      }
     },
   },
   resolve: {
