@@ -9,6 +9,10 @@ if [ -n "$SNAPSHOT_SAS_URL" ]; then
     SAS_URI="$SNAPSHOT_SAS_URL" /usr/local/bin/hydrate.sh $WORKSPACE_DIR
 fi
 
+# Keep reflog commits "forever"
+git config gc.reflogExpire 500.years.ago
+git config gc.reflogExpireUnreachable 500.years.ago
+
 sudo cp .devcontainer/spark.conf /etc/supervisor/conf.d/
 
 sudo chown node /var/run/
