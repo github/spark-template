@@ -1,0 +1,4 @@
+
+#!/bin/sh
+echo "Running post-commit build..."
+OUTPUT_DIR=/workspaces/preview-build npm run build -- --emptyOutDir

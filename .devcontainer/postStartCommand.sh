@@ -17,3 +17,6 @@ sudo chown -R node /var/log/
 supervisord
 supervisorctl reread
 supervisorctl update
+
+# Run the post-commit script once to rebuild the app at startup
+$(pwd)/.devcontainer/post-commit
