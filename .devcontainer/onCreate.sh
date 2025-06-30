@@ -29,7 +29,3 @@ npm run optimize --override
 
 echo "Installing supervisor"
 sudo apt-get update && sudo apt-get install -y supervisor
-
-echo "Setting up auto build for static preview"
-ln -fs $(pwd)/.devcontainer/post-commit .git/hooks/post-commit
-$(pwd)/.devcontainer/post-commit 

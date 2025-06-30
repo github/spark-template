@@ -18,5 +18,8 @@ supervisord
 supervisorctl reread
 supervisorctl update
 
-# Run the post-commit script once to rebuild the app at startup
-$(pwd)/.devcontainer/post-commit
+# Run the build script to perform a one-time build for static preview
+cd $WORKSPACE_DIR
+.git/hooks/post-commit
+cd - >/dev/null
+
