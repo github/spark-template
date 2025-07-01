@@ -3,7 +3,7 @@
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 "$SCRIPT_DIR/refreshTools.sh"
 
-# Check if SNAPSHOT_SAS_URL was passed, if so run hydrate.sh in background
+# Check if SNAPSHOT_SAS_URL was passed, if so run hydrate.sh
 if [ -n "$SNAPSHOT_SAS_URL" ]; then
     WORKSPACE_DIR="/workspaces/spark-template"
     SAS_URI="$SNAPSHOT_SAS_URL" /usr/local/bin/hydrate.sh $WORKSPACE_DIR
@@ -21,3 +21,9 @@ sudo chown -R node /var/log/
 supervisord
 supervisorctl reread
 supervisorctl update
+
+# Run the build script to perform a one-time build for static preview
+cd $WORKSPACE_DIR
+.git/hooks/post-commit
+cd - >/dev/null
+
