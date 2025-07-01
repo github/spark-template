@@ -13,7 +13,7 @@ TOOLS_MARKER_FILE="$MARKER_DIR/tools"
 sudo mkdir -p "$MARKER_DIR"
 
 # Fetch the latest release information
-LATEST_RELEASE=$(curl -s -H "Authorization: token $TEMPLATE_PAT" https://api.github.com/repos/github/spark-template/releases/latest)
+LATEST_RELEASE=$(curl -s https://api.github.com/repos/github/spark-template/releases/latest)
 
 # Check if marker file exists and has the same release ID
 RELEASE_ID=$(echo "$LATEST_RELEASE" | jq -r '.id')
@@ -28,7 +28,7 @@ TEMP_DIR=$(mktemp -d)
 cd $TEMP_DIR
 
 DOWNLOAD_URL=$(echo "$LATEST_RELEASE" | jq -r '.assets[0].url')
-curl -L -o dist.zip -H "Authorization: token $TEMPLATE_PAT" -H "Accept: application/octet-stream" "$DOWNLOAD_URL"
+curl -L -o dist.zip -H "Accept: application/octet-stream" "$DOWNLOAD_URL"
 
 unzip -o dist.zip
 rm dist.zip
