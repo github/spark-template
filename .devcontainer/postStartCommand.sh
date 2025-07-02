@@ -23,7 +23,4 @@ supervisorctl reread
 supervisorctl update
 
 # Run the build script to perform a one-time build for static preview
-cd $WORKSPACE_DIR
-.git/hooks/post-commit
-cd - >/dev/null
-
+/usr/local/bin/static-preview-build.sh
