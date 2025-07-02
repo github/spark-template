@@ -45,7 +45,7 @@ sudo mv ./spark-sdk-dist/spark-agent.js /usr/local/bin/spark-agent
 sudo cp ./spark-sdk-dist/proxy.js /workspaces/proxy.js
 sudo mv ./spark-sdk-dist/proxy.js  /usr/local/bin/proxy.js
 sudo mv ./spark-sdk-dist/spark.package.json /workspaces/spark.package.json 
-sudo mv ./spark-sdk-dist/post-commit ${WORKSPACE_DIR}/.git/hooks/post-commit
+# sudo mv ./spark-sdk-dist/post-commit ${WORKSPACE_DIR}/.git/hooks/post-commit
 
 # Upgrade the Spark Tools package
 if [ -f "$TOOLS_MARKER_FILE" ] && [ "$(cat "$TOOLS_MARKER_FILE")" == "$(cat ./spark-sdk-dist/spark-tools-version)" ]; then
