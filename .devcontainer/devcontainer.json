@@ -9,7 +9,7 @@
   // Runs automatically after Prebuild Template environment is created.
   "onCreateCommand": "bash .devcontainer/onCreate.sh",
   // Runs automatically every time the dev container has been (re-)started
-  "postStartCommand": "bash sh .devcontainer/postStartCommand.sh",
+  "postStartCommand": "bash .devcontainer/postStartCommand.sh",
   "customizations": {
     "codespaces": { 
       "onStopCommand": "bash shutdown.sh"
