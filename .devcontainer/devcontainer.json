@@ -7,12 +7,12 @@
     "cpus": 4
   },
   // Runs automatically after Prebuild Template environment is created.
-  "onCreateCommand": ".devcontainer/onCreate.sh",
+  "onCreateCommand": "bash .devcontainer/onCreate.sh",
   // Runs automatically every time the dev container has been (re-)started
-  "postStartCommand": ".devcontainer/postStartCommand.sh",
+  "postStartCommand": "bash sh .devcontainer/postStartCommand.sh",
   "customizations": {
     "codespaces": { 
-      "onStopCommand": "shutdown.sh"
+      "onStopCommand": "bash shutdown.sh"
     }
   },
   "forwardPorts": [
