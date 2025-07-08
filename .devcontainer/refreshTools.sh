@@ -41,7 +41,6 @@ sudo mv ./spark-sdk-dist/deploy.sh /usr/local/bin/deploy.sh
 sudo mv ./spark-sdk-dist/shutdown.sh /usr/local/bin/shutdown.sh
 sudo mv ./spark-sdk-dist/hydrate.sh /usr/local/bin/hydrate.sh
 sudo mv ./spark-sdk-dist/file-syncer.js /usr/local/bin/spark-file-syncer
-sudo mv ./spark-sdk-dist/spark-agent.js /usr/local/bin/spark-agent
 sudo cp ./spark-sdk-dist/proxy.js /workspaces/proxy.js
 sudo mv ./spark-sdk-dist/proxy.js  /usr/local/bin/proxy.js
 sudo mv ./spark-sdk-dist/spark.package.json /workspaces/spark.package.json 

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-"$SCRIPT_DIR/refreshTools.sh"
+bash "$SCRIPT_DIR/refreshTools.sh"
 
 # Check if SNAPSHOT_SAS_URL was passed, if so run hydrate.sh
 if [ -n "$SNAPSHOT_SAS_URL" ]; then
