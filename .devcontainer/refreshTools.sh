@@ -44,7 +44,7 @@ sudo mv ./spark-sdk-dist/file-syncer.js /usr/local/bin/spark-file-syncer
 sudo cp ./spark-sdk-dist/proxy.js /workspaces/proxy.js
 sudo mv ./spark-sdk-dist/proxy.js  /usr/local/bin/proxy.js
 sudo mv ./spark-sdk-dist/spark.package.json /workspaces/spark.package.json 
-sudo mv ./spark-tools/static-preview-build.sh /usr/local/bin/static-preview-build.sh
+sudo mv ./spark-sdk-dist/static-preview-build.sh /usr/local/bin/static-preview-build.sh
 sudo mv ./spark-sdk-dist/post-commit ${WORKSPACE_DIR}/.git/hooks/post-commit
 
 # Upgrade the Spark Tools package
