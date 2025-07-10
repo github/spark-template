@@ -22,5 +22,6 @@ supervisord
 supervisorctl reread
 supervisorctl update
 
-# Run the build script to perform a one-time build for static preview
+# Set up post-commit hook and also run the build script to perform a one-time build for static preview
+ln -fs /usr/local/bin/post-commit .git/hooks/pre-push
 /usr/local/bin/static-preview-build.sh
