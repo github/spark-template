@@ -19,5 +19,5 @@ rm dist.zip
 DIST_DIR="spark-sdk-dist"
 
 bash spark-sdk-dist/repair.sh
-LATEST_RELEASE="$LATEST_RELEASE" DIST_DIR="$DIST_DIR" WORKSPACE_DIR=$WORKSPACE_DIR bash spark-sdk-dist/install-tools.sh
+LATEST_RELEASE="$LATEST_RELEASE" DIST_DIR="$DIST_DIR" WORKSPACE_DIR="$WORKSPACE_DIR" bash spark-sdk-dist/install-tools.sh
 rm -rf $TEMP_DIR
