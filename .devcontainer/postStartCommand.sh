@@ -24,7 +24,7 @@ if [ -n "$SNAPSHOT_SAS_URL" ]; then
 fi
 
 cd /tmp/spark
-LATEST_RELEASE="$RELEASE_ID" WORKSPACE_DIR="$WORKSPACE_DIR" bash /tmp/spark/spark-sdk-dist/install-tools.sh sdk
+LATEST_RELEASE="$LATEST_RELEASE" WORKSPACE_DIR="$WORKSPACE_DIR" bash /tmp/spark/spark-sdk-dist/install-tools.sh sdk
 cd /workspaces/spark-template
 
 # Keep reflog commits "forever"
