@@ -23,7 +23,7 @@ sudo rm -rf "$azcopy_dir"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 LATEST_RELEASE=$(bash "$SCRIPT_DIR/refreshTools.sh")
-LATEST_RELEASE="$LATEST_RELEASE" WORKSPACE_DIR="$WORKSPACE_DIR" bash spark-sdk-dist/install-tools.sh services
+LATEST_RELEASE="$LATEST_RELEASE" WORKSPACE_DIR="$WORKSPACE_DIR" bash /tmp/spark/spark-sdk-dist/install-tools.sh services
 
 
 echo "Pre-starting the server and generating the optimized assets"

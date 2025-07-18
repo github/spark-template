@@ -5,7 +5,7 @@ LATEST_RELEASE=$(bash "$SCRIPT_DIR/refreshTools.sh")
 
 bash spark-sdk-dist/repair.sh
 
-LATEST_RELEASE="$LATEST_RELEASE" WORKSPACE_DIR="$WORKSPACE_DIR" bash spark-sdk-dist/install-tools.sh services
+LATEST_RELEASE="$LATEST_RELEASE" WORKSPACE_DIR="$WORKSPACE_DIR" bash /tmp/sparkspark-sdk-dist/install-tools.sh services
 
 sudo cp .devcontainer/spark.conf /etc/supervisor/conf.d/
 
@@ -22,7 +22,7 @@ if [ -n "$SNAPSHOT_SAS_URL" ]; then
     SAS_URI="$SNAPSHOT_SAS_URL" /usr/local/bin/hydrate.sh $WORKSPACE_DIR
 fi
 
-LATEST_RELEASE="$RELEASE_ID" WORKSPACE_DIR="$WORKSPACE_DIR" bash spark-sdk-dist/install-tools.sh sdk
+LATEST_RELEASE="$RELEASE_ID" WORKSPACE_DIR="$WORKSPACE_DIR" bash /tmp/spark/spark-sdk-dist/install-tools.sh sdk
 
 # Keep reflog commits "forever"
 git config gc.reflogExpire 500.years.ago
@@ -34,4 +34,4 @@ git config gc.reflogExpireUnreachable 500.years.ago
 ln -fs /usr/local/bin/post-commit .git/hooks/post-commit
 /usr/local/bin/static-preview-build.sh
 
-LATEST_RELEASE="$RELEASE_ID" WORKSPACE_DIR="$WORKSPACE_DIR" bash spark-sdk-dist/install-tools.sh cli
+LATEST_RELEASE="$RELEASE_ID" WORKSPACE_DIR="$WORKSPACE_DIR" bash /tmp/spark/spark-sdk-dist/install-tools.sh cli
