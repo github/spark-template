@@ -10,7 +10,7 @@ echo "Installing the GitHub CLI"
   && sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
   && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
   && sudo apt update \
-  && sudo apt install gh inotify-tools -y
+  && sudo apt install gh inotify-tools ripgrep fd-find -y
 
 echo "Installing azcopy"
 
