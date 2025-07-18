@@ -38,5 +38,5 @@ ln -fs /usr/local/bin/post-commit .git/hooks/post-commit
 /usr/local/bin/static-preview-build.sh
 
 cd /tmp/spark
-LATEST_RELEASE="$RELEASE_ID" WORKSPACE_DIR="$WORKSPACE_DIR" bash /tmp/spark/spark-sdk-dist/install-tools.sh cli
+LATEST_RELEASE="$LATEST_RELEASE" WORKSPACE_DIR="$WORKSPACE_DIR" bash /tmp/spark/spark-sdk-dist/install-tools.sh cli
 cd /workspaces/spark-template
