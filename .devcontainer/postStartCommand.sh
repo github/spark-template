@@ -3,8 +3,8 @@
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 LATEST_RELEASE=$(bash "$SCRIPT_DIR/refreshTools.sh")
 
+cd /tmp/spark
 bash spark-sdk-dist/repair.sh
-
 LATEST_RELEASE="$LATEST_RELEASE" WORKSPACE_DIR="$WORKSPACE_DIR" bash /tmp/sparkspark-sdk-dist/install-tools.sh services
 
 sudo cp .devcontainer/spark.conf /etc/supervisor/conf.d/
@@ -16,6 +16,7 @@ supervisord
 supervisorctl reread
 supervisorctl update
 
+cd /workspaces/spark-template
 # Check if SNAPSHOT_SAS_URL was passed, if so run hydrate.sh
 if [ -n "$SNAPSHOT_SAS_URL" ]; then
     WORKSPACE_DIR="/workspaces/spark-template"

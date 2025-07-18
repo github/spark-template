@@ -22,11 +22,13 @@ sudo mv "$azcopy_dir/azcopy" /usr/local/bin/azcopy
 sudo rm -rf "$azcopy_dir"
 
 echo "Installing sdk"
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 LATEST_RELEASE=$(bash "$SCRIPT_DIR/refreshTools.sh")
-LATEST_RELEASE="$LATEST_RELEASE" WORKSPACE_DIR="$WORKSPACE_DIR" bash /tmp/spark/spark-sdk-dist/install-tools.sh services
+cd /tmp/spark
+LATEST_RELEASE="$LATEST_RELEASE" WORKSPACE_DIR="$WORKSPACE_DIR" bash spark-sdk-dist/install-tools.sh
 
-
+cd /workspaces/spark-template
 echo "Pre-starting the server and generating the optimized assets"
 npm run optimize --override
 
