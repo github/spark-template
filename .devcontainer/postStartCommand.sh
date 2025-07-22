@@ -13,9 +13,13 @@ cd /workspaces/spark-template
 sudo chown node /var/run/
 sudo chown -R node /var/log/
 
+top -b -n 1 > test.top1
+
 supervisord
 supervisorctl reread
 supervisorctl update
+
+top -b -n 1 > test.top2
 
 # Check if SNAPSHOT_SAS_URL was passed, if so run hydrate.sh
 if [ -n "$SNAPSHOT_SAS_URL" ]; then
