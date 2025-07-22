@@ -10,7 +10,7 @@
   "onCreateCommand": "bash .devcontainer/onCreate.sh",
   // Runs automatically every time the dev container has been (re-)started
   "postStartCommand": "bash .devcontainer/postStartCommand.sh",
-  "updateContentCommand": "bash .devcontainer/postStartCommand.sh",
+  "updateContentCommand": "bash .devcontainer/updateContentCommand.sh",
   "customizations": {
     "codespaces": { 
       "onStopCommand": "bash shutdown.sh"
