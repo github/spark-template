@@ -13,13 +13,9 @@ cd /workspaces/spark-template
 sudo chown node /var/run/
 sudo chown -R node /var/log/
 
-top -b -n 1 > test.top1
-
 supervisord
 supervisorctl reread
 supervisorctl update
-
-top -b -n 1 > test.top2
 
 # Check if SNAPSHOT_SAS_URL was passed, if so run hydrate.sh
 if [ -n "$SNAPSHOT_SAS_URL" ]; then
@@ -34,8 +30,6 @@ cd /workspaces/spark-template
 # Keep reflog commits "forever"
 git config gc.reflogExpire 500.years.ago
 git config gc.reflogExpireUnreachable 500.years.ago
-
-
 
 # Set up post-commit hook and also run the build script to perform a one-time build for static preview
 ln -fs /usr/local/bin/post-commit .git/hooks/post-commit
