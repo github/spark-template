@@ -29,3 +29,5 @@ dist-ssr
 packages
 .file-manifest
 .devcontainer/
+
+.spark-workbench-id
