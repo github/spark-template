@@ -3,6 +3,15 @@
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 LATEST_RELEASE=$(bash "$SCRIPT_DIR/refreshTools.sh")
 
+# Check git repository state and create initial commit if needed
+cd /workspaces/spark-template
+echo "Checking git repository state"
+if ! git rev-parse HEAD >/dev/null 2>&1; then
+    echo "No commits found, creating initial commit"
+    git add . || true
+    git commit --allow-empty --no-verify -m "Initial commit" --no-gpg-sign || true
+fi 
+
 sudo cp .devcontainer/spark.conf /etc/supervisor/conf.d/
 
 cd /tmp/spark
@@ -30,7 +39,6 @@ cd /workspaces/spark-template
 # Keep reflog commits "forever"
 git config gc.reflogExpire 500.years.ago
 git config gc.reflogExpireUnreachable 500.years.ago
-
 
 
 # Set up post-commit hook and also run the build script to perform a one-time build for static preview
