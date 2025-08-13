@@ -5,8 +5,10 @@ import { defineConfig, PluginOption } from "vite";
 import sparkPlugin from "@github/spark/spark-vite-plugin";
 import createIconImportProxy from "@github/spark/vitePhosphorIconProxyPlugin";
 import { resolve } from 'path'
+import { randomBytes } from 'crypto'
 
 const projectRoot = process.env.PROJECT_ROOT || import.meta.dirname
+const VITE_SERVER_SESSION_ID = randomBytes(16).toString('hex');
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -17,6 +19,9 @@ export default defineConfig({
     createIconImportProxy() as PluginOption,
     sparkPlugin() as PluginOption,
   ],
+  define: {
+    VITE_SERVER_SESSION_ID: JSON.stringify(VITE_SERVER_SESSION_ID),
+  },
   resolve: {
     alias: {
       '@': resolve(projectRoot, 'src')
