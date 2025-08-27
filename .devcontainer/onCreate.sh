@@ -10,7 +10,7 @@ echo "Installing the GitHub CLI"
   && sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
   && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
   && sudo apt update \
-  && sudo apt install gh inotify-tools -y
+  && sudo apt install gh inotify-tools ripgrep fd-find -y
 
 echo "Installing azcopy"
 
@@ -21,9 +21,14 @@ azcopy_dir=$(find /usr/local/bin/ -type d -name "azcopy*" | head -n 1)
 sudo mv "$azcopy_dir/azcopy" /usr/local/bin/azcopy
 sudo rm -rf "$azcopy_dir"
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-"$SCRIPT_DIR/refreshTools.sh"
+echo "Installing sdk"
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+LATEST_RELEASE=$(bash "$SCRIPT_DIR/refreshTools.sh")
+cd /tmp/spark
+LATEST_RELEASE="$LATEST_RELEASE" WORKSPACE_DIR="$WORKSPACE_DIR" bash spark-sdk-dist/install-tools.sh
+
+cd /workspaces/spark-template
 echo "Pre-starting the server and generating the optimized assets"
 npm run optimize --override
 
