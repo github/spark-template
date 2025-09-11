@@ -1,9 +1,13 @@
-import { Alert, AlertTitle, AlertDescription } from "./components/ui/alert";
-import { Button } from "./components/ui/button";
+import { Alert, AlertTitle, AlertDescription } from "@/components/Alert";
+import { Button } from "@/components/Button";
+import { AlertTriangleIcon, RefreshCwIcon } from "@/components/Icons";
 
-import { AlertTriangleIcon, RefreshCwIcon } from "lucide-react";
+interface ErrorFallbackProps {
+  error: Error;
+  resetErrorBoundary: () => void;
+}
 
-export const ErrorFallback = ({ error, resetErrorBoundary }) => {
+export const ErrorFallback = ({ error, resetErrorBoundary }: ErrorFallbackProps) => {
   // When encountering an error in the development mode, rethrow it and don't display the boundary.
   // The parent UI will take care of showing a more helpful dialog.
   if (import.meta.env.DEV) throw error;
@@ -21,7 +25,7 @@ export const ErrorFallback = ({ error, resetErrorBoundary }) => {
         
         <div className="bg-card border rounded-lg p-4 mb-6">
           <h3 className="font-semibold text-sm text-muted-foreground mb-2">Error Details:</h3>
-          <pre className="text-xs text-destructive bg-muted/50 p-3 rounded border overflow-auto max-h-32">
+          <pre className="text-xs p-3 rounded border overflow-auto max-h-32" style={{ backgroundColor: '#fef2f2', color: '#dc2626' }}>
             {error.message}
           </pre>
         </div>

@@ -1,4 +1,35 @@
-# ✨ Welcome to Your Spark Template!
+# ✨ React Template
+
+A clean, minimal React template without Tailwind CSS or shadcn dependencies.
+
+This template provides a solid foundation for React applications with modern tooling and a clean CSS setup.
+
+🚀 What's Inside?
+- React 19 with TypeScript
+- Vite for fast development and building
+- Clean CSS architecture with CSS custom properties
+- ESLint configuration for code quality
+- Basic utility functions and hooks
+  
+🧠 Getting Started
+
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+2. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+3. Build for production:
+   ```bash
+   npm run build
+   ```
+
+🎨 Styling
+This template uses vanilla CSS with custom properties for theming. You can find the main styles in `src/main.css` and customize the CSS variables to match your design needs. Spark Template!
 You've just launched your brand-new Spark Template Codespace — everything’s fired up and ready for you to explore, build, and create with Spark!
 
 This template is your blank canvas. It comes with a minimal setup to help you get started quickly with Spark development.
