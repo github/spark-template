@@ -1,0 +1,8 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Breadcrumbs.Item > respects the "selected" prop 1`] = `
+<a
+  aria-current="page"
+  class="prc-Breadcrumbs-Item-V05wG selected prc-Breadcrumbs-ItemSelected-gKthY"
+/>
+`;

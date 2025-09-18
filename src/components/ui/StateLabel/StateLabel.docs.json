@@ -1,0 +1,69 @@
+{
+  "id": "state_label",
+  "name": "StateLabel",
+  "status": "alpha",
+  "a11yReviewed": "2025-01-08",
+  "stories": [
+    {
+      "id": "components-statelabel--default"
+    },
+    {
+      "id": "components-statelabel-features--issue-opened"
+    },
+    {
+      "id": "components-statelabel-features--issue-closed"
+    },
+    {
+      "id": "components-statelabel-features--issue-closed-not-planned"
+    },
+    {
+      "id": "components-statelabel-features--issue-draft"
+    },
+    {
+      "id": "components-statelabel-features--pull-opened"
+    },
+    {
+      "id": "components-statelabel-features--pull-closed"
+    },
+    {
+      "id": "components-statelabel-features--pull-merged"
+    },
+    {
+      "id": "components-statelabel-features--queued"
+    },
+    {
+      "id": "components-statelabel-features--draft"
+    },
+    {
+      "id": "components-statelabel-features--unavailable"
+    },
+    {
+      "id": "components-statelabel-features--small"
+    },
+    {
+      "id": "components-statelabel-features--open"
+    },
+    {
+      "id": "components-statelabel-features--closed"
+    }
+  ],
+  "importPath": "@primer/react",
+  "props": [
+    {
+      "name": "variant",
+      "type": "'small' | 'normal'",
+      "defaultValue": "'normal'"
+    },
+    {
+      "name": "status",
+      "type": "'issueOpened' | 'issueClosed' | 'issueClosedNotPlanned' | 'pullOpened' | 'pullClosed' | 'pullMerged' | 'draft' | 'issueDraft' | 'unavailable' | 'open' | 'closed'",
+      "required": true
+    },
+    {
+      "name": "sx",
+      "type": "SystemStyleObject",
+      "deprecated": true
+    }
+  ],
+  "subcomponents": []
+}

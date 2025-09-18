@@ -1,0 +1,10 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`has default theme 1`] = `
+<span
+  class="sc-aXZVg hPmBIl prc-Text-Text-jAl-N"
+  color="fg.default"
+>
+  Hello
+</span>
+`;
