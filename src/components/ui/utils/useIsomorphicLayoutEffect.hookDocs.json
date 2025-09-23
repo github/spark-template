@@ -1,9 +1,0 @@
-{
-  "name": "useIsomorphicLayoutEffect",
-  "importPath": "@primer/react",
-  "stories": [],
-  "parameters": [],
-  "returns": {
-    "type": "void"
-  }
-}

@@ -1,5 +1,0 @@
-.ActionMenuContainer {
-  &:where([data-variant='fullscreen']) {
-    padding-top: var(--base-size-36);
-  }
-}
