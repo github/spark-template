@@ -1,0 +1,774 @@
+# Core concepts
+
+This document aims to discuss some of the core concepts of building with Primer React.
+
+## Responsive props
+
+It's really easy to set different values for most of our component props based on screen size! We take advantage of [styled-system](https://github.com/styled-system/styled-system)'s responsive props API in our components.
+
+```jsx
+<Button display={["flex", "flex", "none"]} />
+```
+
+or
+
+```jsx
+<Text fontSize={[1, 1, 1, 4]} />
+```
+
+## Providing your own theme
+
+You can provide your own theme to Primer React! There are a few ways of doing this to varying degrees, checkout the [theme docs](/guides/react/theming) for more information.
+
+## The `css` prop
+
+When push comes to shove and you just _really_ need to add a custom CSS rule, you can do that with the `css` prop. Please don't abuse this :)
+
+```jsx
+<Box css="border-bottom-right-radius: 0px" />
+```
+
+Please note that you will need to have the **[styled-components babel plugin](https://www.styled-components.com/docs/tooling#babel-plugin)** set up in your project in order to use the `css` prop.
+
+## Types of components
+
+We categorize our components into 3 general types. Building block components, pattern components, and helper components. Understanding how these types of components interact with each other can help you better understand how to get the most out of Primer React.
+
+### Building Blocks
+
+Building block components are components that are basic in their functions and can be used together with other components to build just about any UI. Some examples of building block components are `Box`, `Avatar`, `Details`, and `Link`.
+
+### Pattern Components
+
+Pattern components are components that are made up of several building block components to represent a commonly used pattern in our UI. Some examples of pattern components are `UnderlineNav` and `FilterList`. We plan on expanding our offering of pattern components in the near future.
+
+### Helper Components
+
+Helper components are components that help the user achieve common CSS patterns while maintaining some control over values used. An example of a helper component is `Box`.
+
+## The `as` prop
+
+The `as` prop is a feature that all of our components get from [styled-components](https://www.styled-components.com). It allows you to pass a HTML tag or another component to a Primer Component to be rendered as the base tag of that component along with all of it's styles and props.
+
+For example, say you are using a `Button` component, and you really need to apply `Box` styles to it. You can compose `Box` and `Button` like so:
+
+```jsx
+<Box display="flex" as={Button} href="https://github.com">
+  Hello
+</Box>
+```
+
+This will allow you to use all of the `Button` props _and_ all of the `Box` props without having to wrap your `Button` component in another `Box` component.
+
+**This pattern does have some limitations.** Usage of the `as` prop can lead to unexpected output. In the example above, if the user had done `<Button as={Box}/>` instead, because the `Box`'s render method is ultimately applied, and `Box` components render `div`'s, you'll see that the rendered component is a `div` when ideally you'd like it to be a `button`. It is also not always clear how the styles in both components will interact and/or override each other.
+
+For these reasons, **we recommend only using the `as` prop when you cannot achieve the same result by nesting components.** The `Box` / `Button` example could be done like so:
+
+```jsx
+<Box display="flex">
+  <Button href="https://github.com">Hi</Button>
+</Box>
+```
+
+# Overriding styles
+
+Our goal with Primer React is to hit the sweet spot between providing too little and too much styling flexibility; too little and the design system is too rigid, and too much and it becomes too difficult to maintain a consistent style. Our components are designed to cover common usage patterns, but sometimes a component just isn't _quite_ flexible enough to look the way you need it to look. For those cases, we provide the `sx` prop.
+
+The `sx` prop allows ad-hoc styling that is still theme-aware. Declare the styles you want to apply in camelCase object notation, and try to use theme values in appropriate CSS properties when possible. If you've passed a custom theme using `ThemeProvider` or a `theme` prop, the `sx` prop will honor the custom theme. For more information on theming in Primer React, check out [the Primer Theme documentation](/primer-theme).
+
+## When to use the `sx` prop
+
+The `sx` prop provides a lot of power, which means it is an easy tool to abuse. To best make use of it, we recommend following these guidelines:
+
+- Use the `sx` prop for small stylistic changes to components. For more substantial changes, consider abstracting your style changes into your own wrapper component.
+- Avoid nesting and pseudo-selectors in `sx` prop values when possible.
+
+## Basic example
+
+This example demonstrates applying a bottom border to `Heading`, a component that does not receive `BORDER` system props. The `borderBottomWidth` value comes from `theme.borderWidths` and `borderBottomColor` comes from `theme.colors`.
+
+```jsx live
+<>
+  <Heading sx={{ paddingBottom: 2 }}>Heading</Heading>
+
+  <Heading
+    sx={{
+      paddingBottom: 2,
+      borderBottomWidth: 1,
+      borderBottomColor: "border.default",
+      borderBottomStyle: "solid",
+    }}
+  >
+    Heading with bottom border
+  </Heading>
+</>
+```
+
+## Responsive values
+
+Values in the `sx` prop can be provided as arrays to provide responsive styling.
+
+```jsx live
+<Box
+  sx={{
+    backgroundColor: [
+      "open.emphasis", // default
+      "done.emphasis", // small       (min-width: 544px)
+      "accent.emphasis", // medium    (min-width: 768px)
+      "danger.emphasis", // large     (min-width: 1012px)
+      "attention.emphasis", // xlarge (min-width: 1280px)
+    ],
+    padding: [2, 2, 4],
+    color: "fg.onEmphasis",
+    borderRadius: 2,
+  }}
+>
+  Resize window to see responsive background color
+</Box>
+```
+
+This generates the following CSS:
+
+```css
+.Box-hsdYAF {
+  background-color: var(--bgColor-open-emphasis); /* default */
+  padding: 8px;
+  color: var(--fgColor-onEmphasis);
+  border-radius: 6px;
+}
+@media screen and (min-width: 544px /* small */) {
+  .Box-hsdYAF {
+    background-color: var(--bgColor-done-emphasis);
+    padding: 8px;
+  }
+}
+@media screen and (min-width: 768px /* medium */) {
+  .Box-hsdYAF {
+    background-color: var(--bgColor-accent-emphasis);
+    padding: 16px;
+  }
+}
+@media screen and (min-width: 1012px /* large */) {
+  .Box-hsdYAF {
+    background-color: var(--bgColor-danger-emphasis);
+  }
+}
+@media screen and (min-width: 1280px /* xlarge */) {
+  .Box-hsdYAF {
+    background-color: var(--bgColor-attention-emphasis);
+  }
+}
+```
+
+## Nesting, pseudo-classes, and pseudo-elements
+
+The `sx` prop also allows for declaring styles based on media queries, pseudo-classes, and pseudo-elements. This example, though contrived, demonstrates the ability:
+
+```jsx live
+<Box
+  sx={{
+    "> *": {
+      borderWidth: 1,
+      borderColor: "border.default",
+      borderStyle: "solid",
+      borderBottomWidth: 0,
+      padding: 2,
+      ":last-child": {
+        borderBottomWidth: 1,
+      },
+      ":hover": {
+        bg: "neutral.muted",
+      },
+    },
+  }}
+>
+  <Box>First</Box>
+  <Box>Second</Box>
+  <Box>Third</Box>
+</Box>
+```
+
+## Value reference
+
+- For a reference of possible values for this prop, see the [Styled System reference table](https://github.com/styled-system/styled-system/blob/master/docs/table.md).
+
+# Typography
+
+## Typographic styles
+
+### Overview
+
+Typography design tokens use `rem` units for a more [accessible](https://www.w3.org/WAI/WCAG21/Understanding/resize-text.html) browser zoom experience. Additionally, line height values are unitless and vary per style, making them align to the 4px grid. Each style is opinionated, as reflected in the “shorthand” tokens which control size, family, weight, and line-height with a single `font` CSS declaration.
+
+<StorybookEmbed
+  baseUrl="https://primer.style/primitives/storybook/"
+  stories={[{ id: "typography-functional--overview" }]}
+  height="660"
+/>
+
+### Headings
+
+<StorybookEmbed
+  baseUrl="https://primer.style/primitives/storybook/"
+  stories={[
+    { id: "typography-functional--display" },
+    { id: "typography-functional--title-large" },
+    { id: "typography-functional--title-medium" },
+    { id: "typography-functional--title-small" },
+    { id: "typography-functional--subtitle" },
+  ]}
+  height="360"
+/>
+
+### Body
+
+<StorybookEmbed
+  baseUrl="https://primer.style/primitives/storybook/"
+  stories={[
+    { id: "typography-functional--body-large" },
+    { id: "typography-functional--body-medium" },
+    { id: "typography-functional--body-small" },
+    { id: "typography-functional--caption" },
+  ]}
+  height="260"
+/>
+
+### Code
+
+<StorybookEmbed
+  baseUrl="https://primer.style/primitives/storybook/"
+  stories={[
+    { id: "typography-functional--code-block" },
+    { id: "typography-functional--inline-code-block" },
+  ]}
+  height="260"
+/>
+
+## Font weight
+
+Font weight options include light, normal, medium, and semibold.
+
+<StorybookEmbed
+  baseUrl="https://primer.style/primitives/storybook/"
+  stories={[{ id: "typography-base--base" }]}
+  height="260"
+/>
+
+## Font family
+
+Each font stack uses system fonts, which are optimized for performance.
+
+<StorybookEmbed
+  baseUrl="https://primer.style/primitives/storybook/"
+  stories={[{ id: "typography-functional--font-family" }]}
+  height="260"
+/>
+
+## Best practices
+
+### Hierarchy
+
+When establishing hierarchy for GitHub products, designers should remember that we stress efficient, clean reading experiences for our users. Refrain from utilizing color as a primary method of emphasis.
+
+### Readability
+
+- **Line height**—Utilize line-height tokens for proper alignment.
+
+- **Line length**—It's considered a good practice to keep lines around 80 characters or less—[W3 Page Structure Guidelines](https://www.w3.org/WAI/tutorials/page-structure/styling/). Cases vary depending on the situation, but this serves as a general rule of thumb for designing layouts.
+
+- **Type alignment**—Our content is typically left-aligned and ragged right. Be sensible in deviating from this standard, as justifying, centering, and right-aligning text is atypical of GitHub products.
+
+- **Font weight**—Adjust font weight to add emphasis and differentiate content hierarchy.
+
+- **Letter spacing**—Please refrain from altering letter-spacing on our products. There may be rare scenarios in which this is acceptable, but generally speaking, this should be avoided altogether.
+
+# Layout guidelines
+
+## Overview
+
+Humans process visual information by breaking down shapes and colors. The visual processing system parses colors and textures in parallel, while parsing shapes and forms one at a time.
+
+Layouts are composed of shapes, and therefore parsed linearly. As a consequence, a layout should be organized aiming to create the least amount of friction for users.
+
+People rely on their natural reading order (top-to-bottom, left-to-right in Latin script), and their acquired mental models from previous interactions to discover what they are looking for.
+
+At a quick glance, a layout should provide a clear understanding of the content hierarchy and its relationship. Having a consistent layout throughout the platform allows people to focus on their tasks rather than on learning new models. It helps them to navigate around with ease and confidence.
+
+Constructing a layout that is visually and semantically clear improves how people digest the content, and is aligned with an accessible implementation. Assistive technologies, such as screen readers and keyboard navigation, rely on semantic markup to understand the page structure and translate it into an accessible interaction.
+
+Designing with these considerations in mind results in a user experience that is consistent, inclusive, and responsive.
+
+### Takeways
+
+#### Strive for a focused experience
+
+A page should enable the person to focus on the content. We should respect the user’s attention, and provide an experience that is clean, calm, and uncluttered.
+
+#### Design fully-functional responsive experiences
+
+Pages should adapt to smaller screens, without loss of functionality. Multi-column page layouts need to be designed for scenarios where not all columns fit the viewport at once. Break down layout into multiple views for mobile-friendly experiences.
+
+#### Consider consistency inside and outside GitHub
+
+Leverage existing mental models people have from using GitHub, the web, and other computer software. Use familiar patterns and conventions to create an experience that can be rationally understood.
+
+<!-- Comment about permalinks? -->
+
+## Responsive foundations
+
+Primer provides two levels of abstraction for handling responsive designs:
+
+- **Viewport ranges**, for defining the layout and navigation affordance of a page at a high level.
+- **Breakpoints**, for fine-tuning custom experiences.
+
+### Viewport ranges
+
+Viewport ranges target common scenarios when designing responsive layouts. They are based on the viewport width, and are opinionated about the number of layout columns that can fit in a given range.
+
+Viewport ranges enable designs to break down complex multi-column experiences into simpler layouts according to the the available space.
+
+Because they provide a clear separation between mobile and desktop patterns, viewport ranges allow pages to remain powerful on desktop-friendly scenarios, while allowing a targetted streamlined experience in small devices.
+
+<p>
+  <img
+    width="960"
+    alt="Viewport ranges"
+    src="https://user-images.githubusercontent.com/293280/193167177-87175665-4f52-4d3a-aac3-d09f408c05c4.png"
+  />
+</p>
+
+| Viewport range | Width range | Columns | Description                                              |
+| -------------- | ----------- | ------- | -------------------------------------------------------- |
+| `narrow`       | < 768px     | 1       | Supports a single-column layout. Also known as “mobile”. |
+| `regular`      | >= 768px    | Up to 2 | All desktop-friendly patterns start at this range.       |
+| `wide`         | >= 1400px   | Up to 3 | Optional range when a 3rd layout column is needed.       |
+
+### Breakpoints
+
+Breakpoints enable designers to fine-tune their responsive experiences, adjusting any specific responsive scenarios that are not addressed by viewport ranges.
+
+Historically, Primer has utilized breakpoints as the base of [mobile-first responsive CSS utilities](https://github.com/primer/css/blob/b5e009778ec01b6e983cba6cbf89cebfdc5a4124/docs/content/support/breakpoints.md). While these utilities values remain available, breakpoints are no longer tied to a `min-width` mobile-first media query approach.
+
+Breakpoint sizes should be simply seen as a unit in a ruler. The numbers are not opinionated into how they should be used when applied to a media query. That is, they don't refer to ranges that go upwards or downwards.
+
+While viewport ranges should be used for distinguishing responsive layout adaptations, custom media queries built with these breakpoints values can be used internally for adjusting any specific responsive scenarios that require a fine-tune level of control.
+
+| Breakpoint | Size   |
+| ---------- | ------ |
+| `xsmall`   | 320px  |
+| `small`    | 544px  |
+| `medium`   | 768px  |
+| `large`    | 1012px |
+| `xlarge`   | 1280px |
+| `xxlarge`  | 1400px |
+
+For more information about viewport ranges and breakpoints, check the [Responsive API design guidelines ADR](https://github.com/github/primer/blob/main/adrs/2022-04-15-responsive-design-api-guidelines.md) (currently only available for hubbers).
+
+### Padding
+
+To provide more space for content on smaller screens, the padding should be adjusted according to the different breakpoints.
+
+| Breakpoint | Content | Pane |
+| ---------- | ------- | ---- |
+| `xsmall`   | 16px    | 16px |
+| `small`    | 16px    | 16px |
+| `medium`   | 16px    | 16px |
+| `large`    | 16px    | 16px |
+| `xlarge`   | 24px    | 16px |
+| `xxlarge`  | 24px    | 16px |
+
+The padding is applied directly to the content or pane area, not to its parent container.
+
+For example, the content area on an `xlarge` breakpoint will have a max-width of 1280px. The 1280px includes the 24px padding, which means that visually, the max-width of the content area on an `xlarge` breakpoint will only be 1232px.
+
+![The GitHub settings page when viewed on a `xlarge` breakpoint with it's padding annotated.](https://github.com/user-attachments/assets/4e47b827-3263-4b4b-a59a-d71d3df1fcd4)
+
+## Anatomy of a page
+
+<p>
+  <img
+    src="https://user-images.githubusercontent.com/293280/192653282-e728781c-6024-4d11-9388-12ad91ae388a.png"
+    alt="Anatomy of a page"
+  />
+</p>
+
+### App header
+
+App header is GitHub’s topmost bar. This header contains global navigation and actions, but also contextual navigation elements such as **Context region** and **Local navigation**.
+
+It may also contain other system-level elements, such as notification banners.
+
+App header is never fixed to the top of the viewport. It scrolls with the rest of the page.
+
+### Context region
+
+Context region informs the current section where the person is located. For example, in any page that belongs to a repository, it shows `:owner / :repository`.
+
+Context region is not a full-path breadcrumb. Instead, it works alongside elements such as Local navigation and other in-page navigation components to give the user a full mental model of where they are located.
+
+Don’t include custom interactive elements such as dropdown selectors or other buttons in the Context region.
+
+#### Repository context
+
+<DoDontContainer>
+<Do indented>
+
+`:owner / :repository`
+
+<Caption>Do represent repositories as direct sub-items of an organization or user in the Context region.</Caption> 
+</Do>
+<Dont indented>
+
+`:owner / :repository / Issues`
+
+<Caption>Don’t use a Context region to show the full page’s path. A selected “Issues” item in the local navigation should provide enough complementary context.</Caption>
+</Dont>
+</DoDontContainer>
+
+#### Owner context (organization or users)
+
+<DoDontContainer>
+<Do indented>
+
+`:owner`
+
+<Caption>Do represent top-level sections with a single Context region item.</Caption>
+</Do>
+<Dont indented>
+
+`:owner / Projects`
+
+<Caption>Don’t use a Context region to show the full page’s path. A selected “Projects” item in the local navigation should provide enough complementary context.</Caption>
+</Dont>
+</DoDontContainer>
+
+#### Other owned categories
+
+<DoDontContainer>
+<Do indented>
+
+`:owner / Projects / :project`
+
+<Caption>Do represent objects other than repositories as sub-items of a category.</Caption> 
+</Do>
+<Dont indented>
+
+`:owner / Projects / :project / Insights`
+
+<Caption>Don’t display the full page’s path. The page should use local or in-page navigation elements to provide such context.</Caption>
+</Dont>
+</DoDontContainer>
+
+### App footer
+
+App footer contains useful links and legal information about GitHub. It remains “after the fold” in smaller pages to keep the focus on the main content.
+
+The App footer should be present in all core pages. Experiences that require rich interactions, such as when manipulating large amounts of data, may opt-out of the App footer.
+
+## Page types
+
+Page layouts can have many different forms and needs. The list below contain common page types that can be used as a starting point for designing new experiences.
+
+<Box display="grid" gridTemplateColumns={['1fr', null, null, null, '1fr 1fr']} gridGap={5}>
+  <Box justifyContent="center">
+      <img
+        width="464"
+        alt=""
+        src="https://user-images.githubusercontent.com/293280/193167353-d945da51-665f-4d9b-81f6-904744901d51.png"
+      />
+  </Box>
+  <Box>
+      <Heading as="h3" sx={{fontSize: 3, mb: 2}}>Full pages</Heading>
+
+This is the classic type of a page design of GitHub, where both content and pane regions appear horizontally centered to the viewport.
+
+Page layouts generally limit their maximum width to `xlarge` (1280px) so the content region doesn’t render paragraphs with too many words per line.
+
+  </Box>
+  <Box justifyContent="center">
+      <img
+        width="464"
+        alt=""
+        src="https://user-images.githubusercontent.com/293280/193167352-51d74a57-4e62-488a-92f9-581d0c4ca15a.png"
+      />
+  </Box>
+  <Box>
+      <Heading as="h3" sx={{fontSize: 3, mb: 2}}>Split pages</Heading>
+
+Split page layouts are a good options for pages that have side navigation, filtering, or any type of list-detail pattern.
+
+Split pages separate the viewport in two, allowing the pane to have an independent scrollable area. This is useful when the pane has a long list of items, and the user needs to scroll through the list without losing the context of the selected item.
+
+The pane region of a split page layout is always flushed to the left. Don’t use right-aligned flushed panes as their scrollbar may conflict with the page scrollbar.
+
+The content region of a split page layout may have a maximum width. In those scenarios, the content region tries to remain centered horizontally to the viewport if there's space.
+
+  </Box>
+  <Box justifyContent="center">
+      <img
+        width="464"
+        alt=""
+        src="https://user-images.githubusercontent.com/293280/193167350-b4bd5626-af85-464c-9b0c-df6fbe26a6f0.png"
+      />
+  </Box>
+  <Box>
+      <Heading as="h3" sx={{fontSize: 3, mb: 2}}>Interstitial pages</Heading>
+
+Used for signing-in experiences, password verification, loading states, or other long operations.
+
+Interstitial pages usually have an `xsmall` (320px) maximum width.
+
+  </Box>
+</Box>
+
+## Layout regions
+
+Layout regions are the main structural building blocks of a page layout. They are the areas where content and components are placed, and group elements that share a common purpose.
+
+Layout regions make it easy to adapt the page to different viewport ranges. For more information about responsive behavior, see [Responsive behavior](#responsive-behavior) below.
+
+### Header region
+
+Headers appear at the top of the page, and include a page title, alongside optional actions, summary, local navigation, and metadata.
+
+### Content region
+
+The content region is used for displaying the main subject of the page. Other regions support the content with additional information, either about, or related to it.
+
+### Left pane region
+
+Display navigation, filtering, or an overview for entities such as users, bots, apps, etc.
+
+### Right pane region
+
+Display item metadata, details, and other auxiliary information.
+
+### Footer region
+
+Use it to display less important information, such as references, or links to other pages.
+
+## Responsive behavior
+
+Narrow viewports support a single column when displaying page layouts. The list below contain common responsive adaptations to make sure experiences can remain usable on smaller screens.
+
+<Box display="grid" gridTemplateColumns={['1fr', null, null, null, '1fr 1fr']} gridGap={5}>
+  <Box justifyContent="center">
+      <img
+        width="464"
+        alt=""
+        src="https://user-images.githubusercontent.com/293280/193167623-16947bb7-aadd-4532-91d4-67f2c10c1e37.png"
+      />
+  </Box>
+  <Box>
+      <Heading as="h3" sx={{fontSize: 3, mb: 2}}>Split into different pages</Heading>
+
+List-detail patterns, such as settings pages, can be split into different pages when the viewport is narrow.
+
+In this behavior, only one of pane or content regions is shown. The user can switch between the two by selecting an item from the list to drill-in into its details, or navigate back using a parent link in the page header.
+
+See the [responsive sidebar navigation patterns](/ui-patterns/navigation#responsive-sidebar-navigation-patterns) section of our navigation guidelines for more information.
+
+  </Box>
+  <Box justifyContent="center">
+      <img
+        width="464"
+        alt=""
+        src="https://user-images.githubusercontent.com/293280/193167620-71c4d803-b9d6-4ff0-8f42-9be100b672ac.png"
+      />
+  </Box>
+  <Box>
+      <Heading as="h3" sx={{fontSize: 3, mb: 2}}>Show pane as bottom sheet</Heading>
+
+Panes can be displayed as bottom sheets when they’re used to display auxiliary information, such as metadata, details or actions. Use narrow viewport-specific button triggers to open the pane as a bottom sheet.
+
+If you're using a pane as a sidebar for navigating or filtering, see the [responsive sidebar navigation patterns](/ui-patterns/navigation#responsive-sidebar-navigation-patterns) section of our navigation guidelines for more information.
+
+  </Box>
+  <Box justifyContent="center">
+      <img
+        width="464"
+        alt=""
+        src="https://user-images.githubusercontent.com/293280/193167624-f66af4a2-49b9-4610-bf76-36f77a5521e8.png"
+      />
+  </Box>
+  <Box>
+      <Heading as="h3" sx={{fontSize: 3, mb: 2}}>Stack vertically</Heading>
+
+In scenarios where the pane is used to display an overview of the content, it can be stacked vertically on top of the content region. Metadata and auxiliary information can appear stacked below the content region.
+
+Avoid stacking a pane on top of the main content area if the pane has a lot of links. It will push the main content down and force the user to scroll to get to the content. For alternative patterns, see the [responsive sidebar navigation patterns](/ui-patterns/navigation#responsive-sidebar-navigation-patterns) section of our navigation guidelines.
+
+Additionally, a small pane summary may appear above the content, with a trigger used to display the full details as a bottom sheet.
+
+  </Box>
+</Box>
+
+# Colors
+
+## Overview
+
+<img
+  width="960"
+  alt="Comparative display of GitHub interface elements in light and dark modes. The light mode shows a browser window with a light background, green contribution graph, and standard browser controls. The dark mode presents the same design with a dark background, enhancing the visibility of green contribution graph and browser controls."
+  src="https://github.com/primer/primitives/assets/18661030/615e3e06-9289-4adc-ab85-2213fae96e8c"
+  style="margin-bottom: 1rem;"
+/>
+
+GitHub's UI offers two color modes, `light` and `dark`. Primer supports both color modes across nine [themes](../../foundations/primitives/getting-started#theming). Every pattern in Primer is built to work across all color modes out of the box.
+
+### Color modes in Figma
+
+When designing product interfaces in Figma, we recommend using **light mode** or **dark mode** as the Primer Web Figma library provides components and tokens in those two modes.
+You can learn more about using design tokens in Figma in our [Figma guidelines](../../guides/figma/getting-started#styles-and-variables).
+
+### Color design tokens
+
+Primer delivers colors in the form of [design tokens](../../foundations/primitives/getting-started). Design tokens are a layer of abstraction that allows for better maintainability, consistency and theming. Within Primer, design tokens are represented as CSS variables for code and Figma variables for design. For a full reference table of all available design tokens, see the [color CSS variables](../../foundations/primitives/color) page.
+
+As an example of how color tokens work, when `bgColor-default` is referenced for a background color, the value of that token will automatically change depending on the color mode.
+
+<img
+  width="960"
+  alt="GitHub Wiki page theming comparison. On the left, a light theme featuring a card with a welcome message, a green 'Create the first page' button, and annotated with 'fgColor-default' for foreground and 'bgColor-default' for background colors. On the right, the same card is shown in dark mode with the text and button colors adjusted for contrast, also annotated with color roles."
+  src="https://github.com/primer/react/assets/18661030/21726ed0-2175-44a3-a821-af002778c0b3"
+/>
+
+### Design token categories
+
+Primer design tokens are categorized into three groups:
+
+- Base
+- Functional
+- Component/pattern
+
+To read more about the naming convention, see the [design token naming guidelines](../../foundations/primitives/token-names) page.
+
+<img
+  width="960"
+  alt="Color design guide for GitHub interface elements showing a transition from a base color, a magenta (#bf3989) to a functional color name 'color-scale-pink-5', and then to 'borderColor-sponsors-emphasis'. Below the base color, a color scale from 0 to 9 shows varying shades of pink. Two button examples demonstrate the practical application of the colors: one in a light theme with 'Sponsor' text and heart icon and another in a dark theme with the same elements."
+  src="https://github.com/primer/primitives/assets/18661030/10dd4c91-5faa-464c-ab07-9e26afd54e5f"
+  style="margin-bottom: 1rem;"
+/>
+
+**Base** color tokens are the lowest level tokens and map directly to a raw value. They are <strong>only</strong> to be used as a reference for functional and component/pattern tokens. Base color tokens don't respect color modes and should never be used directly in code or design.
+
+Example: `color-scale-pink-5`
+
+**Functional** color tokens represent global UI patterns such as text, borders, shadows, and backgrounds. These are the most commonly used design tokens throughout all of Primer and GitHub UI. Functional color tokens reference base color tokens under the hood, and respect color modes.
+
+Example: `borderColor-sponsors-emphasis`
+
+<img
+  width="960"
+  alt="GitHub interface component patterns displaying color coding for UI elements. On the left, a red border box indicates 'borderColor-danger-emphasis' changing to 'control-borderColor-danger'. On the right, a blue border box signifies 'borderColor-accent-emphasis' transitioning to 'focus-outlineColor'. Examples include text input fields for an email address with error messages and toggle switches in both light and dark themes."
+  src="https://github.com/primer/primitives/assets/18661030/4b91c346-24c4-4926-911d-de9d27c851d3"
+  style="margin-bottom: 1rem; margin-top: 1rem;"
+/>
+
+**Component/pattern** tokens are used for values that are more specific or unique than functional tokens. These tokens are limited and functional tokens are preferred. Component/pattern color tokens may reference both base and functional tokens under the hood, and respect color modes.
+
+Example: `focus-outlineColor`
+
+## Neutral colors
+
+Shades of gray used for text, borders, backgrounds, and shadows.
+
+### Foreground
+
+Foreground tokens use the `fgColor` property and are used for text and icons.
+
+<img
+  width="960"
+  alt="GitHub pull request interface demonstrating foreground color roles in light and dark themes. Both themes highlight text 'Guidelines #798' in 'fgColor-default', the 'Draft' label in 'fgColor-onEmphasis', and a clickable username in 'fgColor-link'. The light theme uses 'fgColor-muted' for auxiliary text, mirrored in the dark theme for contrast optimization."
+  src="https://github.com/primer/react/assets/18661030/b8f72aab-98eb-4b7a-a5fa-fd8d63e9b8cd"
+/>
+
+### Background
+
+Background tokens use the `bgColor` property and are used for backgrounds and fills.
+
+<img
+  width="960"
+  alt="GitHub's navigation menu in light and dark themes, annotated to indicate background color roles. In light mode, the menu has 'bgColor-inset' for the avatar circle, 'bgColor-emphasis' for the 'Pull requests' button, 'overlay-bgColor' for hover effects, 'bgColor-muted' for inactive menu items, and 'bgColor-default' for the overall background. The dark mode mirrors this scheme with appropriate colors for visibility."
+  src="https://github.com/primer/react/assets/18661030/477efd99-16a0-42f7-8bd4-68c05bb5376a"
+/>
+
+### Border
+
+Border tokens use the `borderColor` property and are used for borders and dividers.
+
+<img
+  width="960"
+  alt="GitHub interface dropdown menu with border color annotations in light and dark themes. In light mode, the dropdown is outlined with 'borderColor-default', while menu options are separated by 'borderColor-muted'. In dark mode, the same color roles apply with adjusted shades for contrast."
+  src="https://github.com/primer/react/assets/18661030/6e916437-0bcd-4dd0-9e88-f014f27d1fd0"
+/>
+
+### Shadow
+
+Shadow tokens use the `shadow` property and are used for shadows and elevation.
+
+<img
+  width="960"
+  alt="GitHub interface design elements annotated with shadow styles: 'shadow-floating-small', 'shadow-resting-xsmall', and 'shadow-inset', displayed on light and dark mode backgrounds."
+  src="https://github.com/primer/primitives/assets/18661030/246b3dc1-42b4-4125-aaf1-f936bc29c995"
+/>
+
+## Semantic colors
+
+Semantic colors are typically used to communicate status, action, or emphasis. Each semantic color is tied to a [role](#color-roles) with a specific meaning. Color tokens are available for foreground, background, and border. Background and border colors have both a `muted` and `emphasis` option.
+
+<img
+  width="960"
+  alt="Overview of GitHub UI color roles in light and dark themes. Each theme displays labeled color swatches for: 'accent-emphasis' in blue, 'accent-muted' in light blue, 'success-emphasis' in green, 'success-muted' in light green, 'danger-emphasis' in red, 'danger-muted' in light red, 'warning-emphasis' in yellow, 'warning-muted' in light yellow, 'done-emphasis' in purple, 'done-muted' in light purple, 'sponsor-emphasis' in magenta, and 'sponsor-muted' in light magenta."
+  src="https://github.com/primer/primitives/assets/18661030/165ceeae-9933-473a-976f-655c918be1c2"
+/>
+
+### Muted
+
+Muted background and border colors are often combined to draw attention to a specific piece of content with a subtle emphasis.
+
+<img
+  width="960"
+  alt="GitHub interface elements showing a warning message and a user comment in both light and dark modes. The warning message has a yellow background with a caution icon and is dismissible with a close button. The user comment by 'monalisa' features a speech bubble with a light blue background in light mode and a dark blue background in dark mode, both with muted borders."
+  src="https://github.com/primer/react/assets/18661030/df33b03c-ef06-4dc6-9d85-f6dd9cd3f3f0"
+/>
+
+### Emphasis
+
+Emphasis background colors provide a stronger emphasis for UI elements and are always combined with `fgColor-onEmphasis` tokens for text and icons.
+
+<img
+  width="960"
+  alt="GitHub interface showcasing button styles with emphasis colors in light and dark modes. The 'Primary' button is green, the 'Danger' button is red with a trash icon, the 'Queued' button is brown with a clock icon, and the 'Beta' button is outlined in green. Annotations indicate 'borderColor-{role}-emphasis' and 'bgColor-{role}-emphasis' for each button style."
+  src="https://github.com/primer/react/assets/18661030/3e4ec1f8-cbc5-4ebf-9816-7f247474b9c6"
+/>
+
+### Semantic foreground
+
+Foreground semantic colors provide contrast against `muted` and default background colors and should be used for text and icons.
+
+<img
+  width="960"
+  alt="GitHub interface elements displaying in light and dark themes with foreground color roles. Tags include 'Sponsor' with a heart icon, 'Verified' with a checkmark, and language tags 'css' and 'ruby'. The colors of text and icons are adjusted according to the theme for optimal contrast, annotated with 'fgColor-{role}'."
+  src="https://github.com/primer/react/assets/18661030/7fcd6efb-ec86-4460-98aa-e3e5be062bec"
+/>
+
+## Color roles
+
+| Color roles                                                                                                                                                                                                                | Usage                                                                     |
+| :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------ |
+| <Box sx={{display: 'inline-flex', alignContent: 'center', gap: '4px', verticalAlign: 'middle'}}><Box sx={{backgroundColor: 'accent.emphasis', height: '24px', width: '24px', borderRadius: 1}}></Box> `accent`</Box>       | Links, selected, active, and focus states, and neutral information        |
+| <Box sx={{display: 'inline-flex', alignContent: 'center', gap: '4px', verticalAlign: 'middle'}}><Box sx={{backgroundColor: 'success.emphasis', height: '24px', width: '24px', borderRadius: 1}}></Box> `success`</Box>     | Primary buttons, positive messaging and successful states                 |
+| <Box sx={{display: 'inline-flex', alignContent: 'center', gap: '4px', verticalAlign: 'middle'}}><Box sx={{backgroundColor: 'attention.emphasis', height: '24px', width: '24px', borderRadius: 1}}></Box> `attention`</Box> | Warning states, active processes such as queued PRs and tests in progress |
+| <Box sx={{display: 'inline-flex', alignContent: 'center', gap: '4px', verticalAlign: 'middle'}}><Box sx={{backgroundColor: 'danger.emphasis', height: '24px', width: '24px', borderRadius: 1}}></Box> `danger`</Box>       | Danger buttons and error states                                           |
+| <Box sx={{display: 'inline-flex', alignContent: 'center', gap: '4px', verticalAlign: 'middle'}}><Box sx={{backgroundColor: 'open.emphasis', height: '24px', width: '24px', borderRadius: 1}}></Box> `open`</Box>           | Open tasks, PRs or workflows                                              |
+| <Box sx={{display: 'inline-flex', alignContent: 'center', gap: '4px', verticalAlign: 'middle'}}><Box sx={{backgroundColor: 'closed.emphasis', height: '24px', width: '24px', borderRadius: 1}}></Box> `closed`</Box>       | Closed tasks, PRs or workflows                                            |
+| <Box sx={{display: 'inline-flex', alignContent: 'center', gap: '4px', verticalAlign: 'middle'}}><Box sx={{backgroundColor: 'done.emphasis', height: '24px', width: '24px', borderRadius: 1}}></Box> `done`</Box>           | Completed tasks, PRs or workflows                                         |
+| <Box sx={{display: 'inline-flex', alignContent: 'center', gap: '4px', verticalAlign: 'middle'}}><Box sx={{backgroundColor: 'sponsors.emphasis', height: '24px', width: '24px', borderRadius: 1}}></Box> `sponsors`</Box>   | Text and icons related to GitHub Sponsors                                 |
+
+## Developers
+
+Colors are available in the form of CSS variables and CSS utility classes that can be used across all frameworks including React and Rails. Check out the references below for more information.
+
+- [Color CSS variables](../../foundations/primitives/color)
+- [Color CSS utility classes](../../foundations/css-utilities/colors)
