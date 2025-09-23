@@ -1,5 +1,5 @@
-import React from 'react';
 import { classNames } from '@/lib/utils';
+import React from 'react';
 
 interface AlertProps {
   children: React.ReactNode;
