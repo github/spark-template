@@ -1,4 +1,4 @@
-import { Button, Flash, Heading, Text } from "@/components/ui";
+import { Button, Flash, Heading, Text } from "@primer/react";
 import { AlertIcon, SyncIcon } from "@primer/octicons-react";
 
 interface ErrorFallbackProps {
