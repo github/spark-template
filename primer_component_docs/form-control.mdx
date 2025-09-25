@@ -1,0 +1,74 @@
+---
+title: Form control
+description: Form control displays a labelled input and, optionally, associated validation text and/or hint text.
+reactId: form_control
+railsIds:
+  - Primer::Alpha::FormControl
+---
+
+import Code from '@primer/gatsby-theme-doctocat/src/components/code'
+import ComponentLayout from '~/src/layouts/component-layout'
+export default ComponentLayout
+import {AccessibilityLink} from '~/src/components/accessibility-link'
+
+## Usage
+
+Use form controls when requiring data input from the user. For example, creating a new repo configuring settings, and logging in.
+
+This component is a helper component to keep layouts consistent and ensure the correct ARIA attributes are set. You can find some of Primer's form components listed in the [Related links](#related-links) section.
+
+## Anatomy
+
+![diagrams labeling the anatomy of a text field and a checkbox field](https://user-images.githubusercontent.com/2313998/171692166-43d45c4b-509a-4f68-9e8b-1577658b493e.png)
+
+Form controls allow users to provide data. At a minimum, they include an input and label. They may also include a caption and required field indicator.
+
+To learn more about anatomy, input methods, forms structure, validation, and more, please refer to our [Forms guidance](/ui-patterns/forms/overview).
+
+## Accessibility
+
+### Required Fields
+
+When using symbols -e.g., an asterisk (*)- to indicate particular fields are required within a form, consider adding a "Required fields are marked with an asterisk (\*)" message at the top of the form for extra clarity.
+
+When marking a control as required, opt to mark the form control as required instead of the input contained within it. The form control will ensure that the required state is passed down to the input element.
+
+<DoDontContainer>
+  <Do>
+        <Code classname="language-jsx">{`
+      <FormControl required>
+  <FormControl.Label>
+    Form Input Label
+  </FormControl.Label>
+  <Checkbox />
+</FormControl>
+    `}</Code>
+    <Caption>Set the required field in the form control</Caption>
+  </Do>
+  <Dont>
+    <Code classname="language-jsx">{`
+      <FormControl>
+  <FormControl.Label>
+    Form Input Label
+  </FormControl.Label>
+  <Checkbox required />
+</FormControl>
+    `}</Code>
+    <Caption>Don’t set the required field on the underlying input</Caption>
+  </Dont>
+</DoDontContainer>
+
+### Known accessibility issues (GitHub staff only)
+
+ <AccessibilityLink label="FormControl"/>
+
+## Related links
+
+- [Forms](/ui-patterns/forms/overview)
+- [Checkbox](/components/checkbox)
+- [Checkbox group](/components/checkbox-group)
+- [Radio](/components/radio)
+- [Radio group](/components/radio-group)
+- [Text input](/components/text-input)
+- [Textarea](/components/textarea)
+- [Select](/components/select)

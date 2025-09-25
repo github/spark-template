@@ -1,0 +1,223 @@
+---
+title: Text input
+description: Text input is used to set a value that is a single line of text.
+reactId: text_input
+railsIds:
+- Primer::Alpha::TextField
+figmaId: text_input
+---
+
+import ComponentLayout from '~/src/layouts/component-layout'
+export default ComponentLayout
+import {AccessibilityLink} from '~/src/components/accessibility-link'
+
+<img
+  width="960"
+  role="presentation"
+  src="https://user-images.githubusercontent.com/2313998/224445194-dceef3a4-25f3-4d0e-a1f4-fdaf868f6179.png"
+/>
+
+## Usage
+
+Use a text input to allow users to input short free-form text. It may also be used as a number input when `type="number"` is passed to the component.
+
+### States
+
+<img
+  width="960"
+  role="presentation"
+  src="https://user-images.githubusercontent.com/2313998/224445195-5a403459-ad36-452c-a6c6-7534eb78f3df.png"
+/>
+
+**Focused:** The input has been navigated to and is ready to accept input.
+
+**Disabled:** The input cannot accept input or become focused.
+
+**Loading:** Some process has been initiated by the input but has not finished.
+
+**Invalid:** The value failed validation.
+
+**Valid:** The value passed validation.
+
+For more information about the "valid" and "invalid" states, see the [validation section](../ui-patterns/forms/overview#validation) of the form design pattern guidelines.
+
+### Best practices
+
+- Only use placeholder text to show an example of the expected input. Never use placeholder text for critical information.
+- Use the width of the text input to give users a hint about how long the value is expected to be
+- If your field accepts free-form text _or_ an option from a predetermined list, consider using an [autocomplete input](/components/autocomplete)
+
+## Anatomy
+
+<img
+  width="960"
+  role="presentation"
+  src="https://user-images.githubusercontent.com/6905903/274238980-22a35352-95c7-49bb-8b35-3c8741426b89.png"
+/>
+
+**Label (required):** The input's title. It should be as concise as possible and convey the purpose of the input. The label may be visually hidden in rare cases, but a label must be defined for assistive technologies such as a screen reader.
+
+**Required indicator:** Indicates that a value is required. Must be shown for any required field, even if all fields in the form are required.
+
+**Input (required):** Accepts user free-form text input
+
+**Leading visual:** An icon or short piece of text to reinforce the purpose of the input. Appears before the input's value.
+
+**Trailing visual:** The same as a leading visual, but appears after the input's value.
+
+**Trailing action:** An action that affects the input. Most commonly used for a button that clears the input.
+
+**Caption:** Provides additional context about the field to help users fill in the correct data or explain how the data will be used. Caption text should be as short as possible. Caption text may be displayed at the same time as a validation message, or it may be hidden if it only provides redundant information.
+
+**Validation message:** A single validation message may be displayed to provide helpful information for a user to complete their task. It is most commonly used to explain why a value is invalid so they can correct it and submit the form.
+
+## Options
+
+### Sizes
+
+<img
+  width="960"
+  role="presentation"
+  src="https://user-images.githubusercontent.com/2313998/224445197-4b71262c-e1cc-4495-88d5-e46c6474d3cc.png"
+/>
+
+A text input can be made smaller or larger depending on the context it's being used in.
+
+You can make an input smaller if it is being used in a tight space with other small elements. You can make an input larger if it's in an open space or feels out of proportion with adjacent large elements.
+
+### Width
+
+<img
+  width="960"
+  role="presentation"
+  src="https://user-images.githubusercontent.com/2313998/224445198-7217e528-ed15-4fe9-aba9-264c7bc62e1b.png"
+/>
+
+By default, a text input will be given a default width by the browser.
+
+However, you can render a text input to fill the width of its parent element, or set the width to whatever makes sense for your use-case. When setting a custom width, consider the length of the expected value.
+
+### Monospace
+
+<img
+  width="960"
+  role="presentation"
+  src="https://user-images.githubusercontent.com/2313998/224445199-c8f27a2b-18e3-4ac7-9764-1d32b1fdc9c7.png"
+/>
+
+The value of the text input may be rendered in a monospace font. Use this variant for inputs related to code. For example, setting a personal access token in a configuration.
+
+### With a trailing action
+
+<img
+  width="960"
+  role="presentation"
+  src="https://user-images.githubusercontent.com/2313998/224445201-7f81cf2c-992c-470b-b702-4b45d57c3234.png"
+/>
+
+A trailing action may be used to render a single action that affects the input. A trailing action is most commonly used for a button that clears the input.
+
+Ideally the trailing action button is an icon without a text label. It is also possible to render the button with a text label, but it should be avoided whenever possible.
+
+Avoid using a trailing action with a trailing visual.
+
+### With leading and trailing visuals
+
+<img
+  width="960"
+  role="presentation"
+  src="https://user-images.githubusercontent.com/2313998/224445202-42904c00-1eff-4f57-98ae-045020688b11.png"
+/>
+
+Leading and trailing visuals are typically shown as an icon to reinforce the purpose of the input.
+
+Icons are preferred, but you may also use a short piece of text in the leading or trailing visual slots when appropriate. For example, text may be used to show a unit such as "minutes", "$", or "%"
+
+Avoid overwhelming the text input by using both a leading and trailing visual. If you're trying to provide more context about the input, consider using text in the input caption.
+
+#### Effects of loading state
+
+<img
+  width="960"
+  role="presentation"
+  src="https://user-images.githubusercontent.com/2313998/224445204-0a43967d-fcd7-4cb6-92dd-51fcd25d95d7.png"
+/>
+
+When a text input is processing some action like performing a search, a loading indicator is shown. To avoid a layout shift, either the leading or trailing visual will be replaced with the loading indicator. The text input component has internal logic to decide which visual to replace, but it can be overridden and explicitly set to show at the start or end of the input.
+
+### With tokens
+
+See [text input with tokens](/components/text-input-with-tokens)
+
+## Accessibility and usability expectations
+
+The text input must have a clear, descriptive, and visible label that informs the user about the information they are expected to enter.
+
+If there are additional instructions or requirements for the information the user is expected to enter, these should be provided as a caption underneath the text input.
+
+The input must have an associated `<label>` to give it an accessible name that is announced by screen readers. Additional instructions or requirements must be easily discoverable by screen reader users - in general, by having them programmatically associated with the input using `aria-describedby`.
+
+If the text input's value is invalid, this must be programmatically conveyed, and not solely rely on visual styling (such as a colored border). In addition, the form must show a descriptive error message that provides further information to the user about what the error is, and how to correct it. See [documentation for form validation](https://primer.style/ui-patterns/forms/overview#validation) for further details.
+
+- Text inputs must have a visible label. While the component allows for labels to be visually hidden, this is only permitted if there is equivalent visible text already within the page that acts as a label for the input. In limited cases an icon alone could act as the visible label, so not just text.
+- [Placeholder text](/guides/accessibility/placeholders) is **never** an acceptable substitute for a label because:
+  - The placeholder text disappears as soon as the input has a value
+  - Placeholder text colors are typically too light to meet the minimum color contrast ratio required for accessibility
+  - Do not rely solely on placeholder text as a label. Once a user enters information in a text input, this placeholder text won't be visible anymore, effectively leading to the input lacking a label.
+- Text inputs whose value is used to filter a list of results should be paired with an announcement for the effect of the filter. For more information, see the [conveying status (filter results)](/ui-patterns/loading#filter-results) section of the loading state pattern guidelines.
+- Text inputs that collect personal information about the user who is filling in the form require  an `autocomplete` attribute with the appropriate value, as this can help users understand the purpose of text input.
+
+### Built-in accessibility features
+
+By default, the component renders a correctly associated pair of `<label>` and `<input type="text">`.
+
+Rails and React implementations automatically associate input captions and validation messages with the `<input>` using `aria-describedby`.
+
+The colors used to visually denote the validation state of the input meet minimum color contrast requirements.
+
+Usage of the `autocomplete` attribute is available in `TextInput` via the `autoComplete` prop in the React version.
+
+### Implementation requirements
+
+When using Octicons for leading and trailing visuals, note that icons don't have any text alternative. They are purely visual, and not conveyed to screen readers. Don't rely on these icons alone to convey meaning – make sure that the text label of the button provides sufficient meaning/context on its own.
+
+In the React version, when setting the `loading` property, the component will include a visual spinner. Note that this spinner is not conveyed to screen readers. You will need to use additional methods (such as a visually hidden live region notification) to convey this state to screen reader users. See the [documentation for loading](https://primer.style/ui-patterns/loading) for further details.
+
+While the Rails version of the component allows for the visible label of the text input to be hidden using `visually_hide_label`, this should only be done if there is an equivalent visible text that acts as the label. In that case, make sure that the actual label / accessible name of the input matches, or is at least contained within, the visible text acting as the label.
+
+If using this component in a way where the input can be mapped to an `autocomplete` value, you should utilize the `autocomplete` attribute with the correct value. 
+
+### How to test the component
+
+#### Integration tests
+
+- The text input has a sufficiently descriptive visible label, and does not rely on the use of placeholder text alone to act as the visible label
+- If the text input includes icons for its leading or trailing visuals, the input's purpose is clear even without the icons (as these are only decorative and are not conveyed to screen reader users)
+- In the React version, when using the `loading` state, this state is conveyed appropriately to screen reader users
+- Ensure that the text input has an `autocomplete` attribute attached, if the field collects personal information about the user who is filling in the form and maps to an autocomplete field described in [Input Purposes for User Interface Components](https://www.w3.org/TR/WCAG21/#input-purposes)
+
+#### Component tests
+
+The `<label for="…">` attribute must point to the `id` of the `<input>`
+- If the component is set to `disabled`, the rendered `<input>` includes the `disabled` HTML attribute
+- If the component has a `placeholder` attribute, the rendered `<input>` includes the `placeholder` HTML attribute
+- If the component has an `autocomplete` attribute, the rendered `<input>` includes the `autocomplete` HTML attribute
+- If the component has an `autocomplete` attribute, the correct value is used for the `autocomplete` HTML attribute.
+- In the Rails implementation, if the component has a `caption`, the caption is rendered as an additional container underneath the `<input>`, and the `<input>` has an `aria-describedby="…"` pointing to the `id` attribute of the container
+- In the Rails implementation, if the component has a `validationMessage`, the message is rendered as an additional container underneath the `<input>`, and the `<input>` has an `aria-describedby="…"` pointing to the `id` attribute of the container
+- In the React implementation, text input fields are composed with the `FormControl` component.
+  - If `FormControl` has a `FormControl.Caption` child, the rendered `<input>` includes the `aria-describedby="…"` pointing to the `id` attribute of the caption
+  - If `FormControl` has a `FormControl.ValidationMessage` child, the rendered `<input>` includes the `aria-describedby="…"` pointing to the `id` attribute of the validation message
+- In the Rails implementation, if the component is set to `invalid`, the rendered `<input>` includes the `aria-invalid="true"` attribute
+- In the React implementation, if the component has a `validationStatus` with the value of `"error"`, the rendered `<input>` includes the `aria-invalid="true"` attribute
+
+### Known accessibility issues (GitHub staff only)
+
+ <AccessibilityLink label="TextInput"/>
+
+## Related links
+
+- [Forms](../ui-patterns/forms/overview)
+- [Autocomplete](/components/autocomplete)
+- [Text input with tokens](/components/text-input-with-tokens)
+11

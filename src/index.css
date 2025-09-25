@@ -1,3 +1,44 @@
-/* This is where custom CSS goes */
+/* Fitness Tracker App Styles */
 @import '@primer/primitives/dist/css/primitives.css';
 @import '@primer/primitives/dist/css/functional/themes/light.css';
+
+/* Custom fitness-themed styling */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  background-color: var(--bgColor-default);
+  color: var(--fgColor-default);
+}
+
+/* Ensure proper styling for interactive elements */
+[data-primer-component="Button"] {
+  cursor: pointer;
+}
+
+/* Custom progress styling for fitness goals */
+.fitness-progress-bar {
+  background: linear-gradient(90deg, var(--bgColor-success-emphasis) 0%, var(--bgColor-success-muted) 100%);
+}
+
+/* Smooth transitions for interactive elements */
+.workout-card, .goal-card, .exercise-card {
+  transition: all 0.2s ease-in-out;
+}
+
+.workout-card:hover, .goal-card:hover, .exercise-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-floating-small);
+}
+
+/* Custom styling for stat cards */
+.stat-card {
+  background: linear-gradient(135deg, var(--bgColor-default) 0%, var(--bgColor-muted) 100%);
+  border: 1px solid var(--borderColor-default);
+}
+
+/* Responsive grid adjustments */
+@media (max-width: 768px) {
+  .responsive-grid {
+    grid-template-columns: 1fr !important;
+  }
+}

@@ -7,13 +7,13 @@ This document aims to discuss some of the core concepts of building with Primer 
 It's really easy to set different values for most of our component props based on screen size! We take advantage of [styled-system](https://github.com/styled-system/styled-system)'s responsive props API in our components.
 
 ```jsx
-<Button display={["flex", "flex", "none"]} />
+<Button display={['flex', 'flex', 'none']}/>
 ```
 
 or
 
 ```jsx
-<Text fontSize={[1, 1, 1, 4]} />
+<Text fontSize={[1,1,1,4]}/>
 ```
 
 ## Providing your own theme
@@ -25,7 +25,7 @@ You can provide your own theme to Primer React! There are a few ways of doing th
 When push comes to shove and you just _really_ need to add a custom CSS rule, you can do that with the `css` prop. Please don't abuse this :)
 
 ```jsx
-<Box css="border-bottom-right-radius: 0px" />
+<Box css='border-bottom-right-radius: 0px' />
 ```
 
 Please note that you will need to have the **[styled-components babel plugin](https://www.styled-components.com/docs/tooling#babel-plugin)** set up in your project in order to use the `css` prop.
@@ -53,9 +53,7 @@ The `as` prop is a feature that all of our components get from [styled-component
 For example, say you are using a `Button` component, and you really need to apply `Box` styles to it. You can compose `Box` and `Button` like so:
 
 ```jsx
-<Box display="flex" as={Button} href="https://github.com">
-  Hello
-</Box>
+<Box display="flex" as={Button} href='https://github.com'>Hello</Box>
 ```
 
 This will allow you to use all of the `Button` props _and_ all of the `Box` props without having to wrap your `Button` component in another `Box` component.
@@ -66,9 +64,11 @@ For these reasons, **we recommend only using the `as` prop when you cannot achie
 
 ```jsx
 <Box display="flex">
-  <Button href="https://github.com">Hi</Button>
+  <Button href='https://github.com'>Hi</Button>
 </Box>
 ```
+
+
 
 # Overriding styles
 
@@ -89,14 +89,14 @@ This example demonstrates applying a bottom border to `Heading`, a component tha
 
 ```jsx live
 <>
-  <Heading sx={{ paddingBottom: 2 }}>Heading</Heading>
+  <Heading sx={{paddingBottom: 2}}>Heading</Heading>
 
   <Heading
     sx={{
       paddingBottom: 2,
       borderBottomWidth: 1,
-      borderBottomColor: "border.default",
-      borderBottomStyle: "solid",
+      borderBottomColor: 'border.default',
+      borderBottomStyle: 'solid',
     }}
   >
     Heading with bottom border
@@ -112,14 +112,14 @@ Values in the `sx` prop can be provided as arrays to provide responsive styling.
 <Box
   sx={{
     backgroundColor: [
-      "open.emphasis", // default
-      "done.emphasis", // small       (min-width: 544px)
-      "accent.emphasis", // medium    (min-width: 768px)
-      "danger.emphasis", // large     (min-width: 1012px)
-      "attention.emphasis", // xlarge (min-width: 1280px)
+      'open.emphasis', // default
+      'done.emphasis', // small       (min-width: 544px)
+      'accent.emphasis', // medium    (min-width: 768px)
+      'danger.emphasis', // large     (min-width: 1012px)
+      'attention.emphasis', // xlarge (min-width: 1280px)
     ],
     padding: [2, 2, 4],
-    color: "fg.onEmphasis",
+    color: 'fg.onEmphasis',
     borderRadius: 2,
   }}
 >
@@ -167,17 +167,17 @@ The `sx` prop also allows for declaring styles based on media queries, pseudo-cl
 ```jsx live
 <Box
   sx={{
-    "> *": {
+    '> *': {
       borderWidth: 1,
-      borderColor: "border.default",
-      borderStyle: "solid",
+      borderColor: 'border.default',
+      borderStyle: 'solid',
       borderBottomWidth: 0,
       padding: 2,
-      ":last-child": {
+      ':last-child': {
         borderBottomWidth: 1,
       },
-      ":hover": {
-        bg: "neutral.muted",
+      ':hover': {
+        bg: 'neutral.muted',
       },
     },
   }}
@@ -192,6 +192,8 @@ The `sx` prop also allows for declaring styles based on media queries, pseudo-cl
 
 - For a reference of possible values for this prop, see the [Styled System reference table](https://github.com/styled-system/styled-system/blob/master/docs/table.md).
 
+
+
 # Typography
 
 ## Typographic styles
@@ -202,7 +204,7 @@ Typography design tokens use `rem` units for a more [accessible](https://www.w3.
 
 <StorybookEmbed
   baseUrl="https://primer.style/primitives/storybook/"
-  stories={[{ id: "typography-functional--overview" }]}
+  stories={[{id: 'typography-functional--overview'}]}
   height="660"
 />
 
@@ -211,11 +213,11 @@ Typography design tokens use `rem` units for a more [accessible](https://www.w3.
 <StorybookEmbed
   baseUrl="https://primer.style/primitives/storybook/"
   stories={[
-    { id: "typography-functional--display" },
-    { id: "typography-functional--title-large" },
-    { id: "typography-functional--title-medium" },
-    { id: "typography-functional--title-small" },
-    { id: "typography-functional--subtitle" },
+    {id: 'typography-functional--display'},
+    {id: 'typography-functional--title-large'},
+    {id: 'typography-functional--title-medium'},
+    {id: 'typography-functional--title-small'},
+    {id: 'typography-functional--subtitle'},
   ]}
   height="360"
 />
@@ -225,10 +227,10 @@ Typography design tokens use `rem` units for a more [accessible](https://www.w3.
 <StorybookEmbed
   baseUrl="https://primer.style/primitives/storybook/"
   stories={[
-    { id: "typography-functional--body-large" },
-    { id: "typography-functional--body-medium" },
-    { id: "typography-functional--body-small" },
-    { id: "typography-functional--caption" },
+    {id: 'typography-functional--body-large'},
+    {id: 'typography-functional--body-medium'},
+    {id: 'typography-functional--body-small'},
+    {id: 'typography-functional--caption'},
   ]}
   height="260"
 />
@@ -237,10 +239,7 @@ Typography design tokens use `rem` units for a more [accessible](https://www.w3.
 
 <StorybookEmbed
   baseUrl="https://primer.style/primitives/storybook/"
-  stories={[
-    { id: "typography-functional--code-block" },
-    { id: "typography-functional--inline-code-block" },
-  ]}
+  stories={[{id: 'typography-functional--code-block'}, {id: 'typography-functional--inline-code-block'}]}
   height="260"
 />
 
@@ -250,7 +249,7 @@ Font weight options include light, normal, medium, and semibold.
 
 <StorybookEmbed
   baseUrl="https://primer.style/primitives/storybook/"
-  stories={[{ id: "typography-base--base" }]}
+  stories={[{id: 'typography-base--base'}]}
   height="260"
 />
 
@@ -260,7 +259,7 @@ Each font stack uses system fonts, which are optimized for performance.
 
 <StorybookEmbed
   baseUrl="https://primer.style/primitives/storybook/"
-  stories={[{ id: "typography-functional--font-family" }]}
+  stories={[{id: 'typography-functional--font-family'}]}
   height="260"
 />
 
@@ -281,6 +280,8 @@ When establishing hierarchy for GitHub products, designers should remember that 
 - **Font weight**—Adjust font weight to add emphasis and differentiate content hierarchy.
 
 - **Letter spacing**—Please refrain from altering letter-spacing on our products. There may be rare scenarios in which this is acceptable, but generally speaking, this should be avoided altogether.
+
+
 
 # Layout guidelines
 
@@ -603,16 +604,13 @@ Additionally, a small pane summary may appear above the content, with a trigger 
   </Box>
 </Box>
 
+
+
 # Colors
 
 ## Overview
 
-<img
-  width="960"
-  alt="Comparative display of GitHub interface elements in light and dark modes. The light mode shows a browser window with a light background, green contribution graph, and standard browser controls. The dark mode presents the same design with a dark background, enhancing the visibility of green contribution graph and browser controls."
-  src="https://github.com/primer/primitives/assets/18661030/615e3e06-9289-4adc-ab85-2213fae96e8c"
-  style="margin-bottom: 1rem;"
-/>
+<img width="960" alt="Comparative display of GitHub interface elements in light and dark modes. The light mode shows a browser window with a light background, green contribution graph, and standard browser controls. The dark mode presents the same design with a dark background, enhancing the visibility of green contribution graph and browser controls." src="https://github.com/primer/primitives/assets/18661030/615e3e06-9289-4adc-ab85-2213fae96e8c" style="margin-bottom: 1rem;" />
 
 GitHub's UI offers two color modes, `light` and `dark`. Primer supports both color modes across nine [themes](../../foundations/primitives/getting-started#theming). Every pattern in Primer is built to work across all color modes out of the box.
 
@@ -707,11 +705,7 @@ Border tokens use the `borderColor` property and are used for borders and divide
 
 Shadow tokens use the `shadow` property and are used for shadows and elevation.
 
-<img
-  width="960"
-  alt="GitHub interface design elements annotated with shadow styles: 'shadow-floating-small', 'shadow-resting-xsmall', and 'shadow-inset', displayed on light and dark mode backgrounds."
-  src="https://github.com/primer/primitives/assets/18661030/246b3dc1-42b4-4125-aaf1-f936bc29c995"
-/>
+<img width="960" alt="GitHub interface design elements annotated with shadow styles: 'shadow-floating-small', 'shadow-resting-xsmall', and 'shadow-inset', displayed on light and dark mode backgrounds." src="https://github.com/primer/primitives/assets/18661030/246b3dc1-42b4-4125-aaf1-f936bc29c995" />
 
 ## Semantic colors
 
@@ -755,16 +749,17 @@ Foreground semantic colors provide contrast against `muted` and default backgrou
 
 ## Color roles
 
-| Color roles                                                                                                                                                                                                                | Usage                                                                     |
-| :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------ |
-| <Box sx={{display: 'inline-flex', alignContent: 'center', gap: '4px', verticalAlign: 'middle'}}><Box sx={{backgroundColor: 'accent.emphasis', height: '24px', width: '24px', borderRadius: 1}}></Box> `accent`</Box>       | Links, selected, active, and focus states, and neutral information        |
-| <Box sx={{display: 'inline-flex', alignContent: 'center', gap: '4px', verticalAlign: 'middle'}}><Box sx={{backgroundColor: 'success.emphasis', height: '24px', width: '24px', borderRadius: 1}}></Box> `success`</Box>     | Primary buttons, positive messaging and successful states                 |
-| <Box sx={{display: 'inline-flex', alignContent: 'center', gap: '4px', verticalAlign: 'middle'}}><Box sx={{backgroundColor: 'attention.emphasis', height: '24px', width: '24px', borderRadius: 1}}></Box> `attention`</Box> | Warning states, active processes such as queued PRs and tests in progress |
-| <Box sx={{display: 'inline-flex', alignContent: 'center', gap: '4px', verticalAlign: 'middle'}}><Box sx={{backgroundColor: 'danger.emphasis', height: '24px', width: '24px', borderRadius: 1}}></Box> `danger`</Box>       | Danger buttons and error states                                           |
-| <Box sx={{display: 'inline-flex', alignContent: 'center', gap: '4px', verticalAlign: 'middle'}}><Box sx={{backgroundColor: 'open.emphasis', height: '24px', width: '24px', borderRadius: 1}}></Box> `open`</Box>           | Open tasks, PRs or workflows                                              |
-| <Box sx={{display: 'inline-flex', alignContent: 'center', gap: '4px', verticalAlign: 'middle'}}><Box sx={{backgroundColor: 'closed.emphasis', height: '24px', width: '24px', borderRadius: 1}}></Box> `closed`</Box>       | Closed tasks, PRs or workflows                                            |
-| <Box sx={{display: 'inline-flex', alignContent: 'center', gap: '4px', verticalAlign: 'middle'}}><Box sx={{backgroundColor: 'done.emphasis', height: '24px', width: '24px', borderRadius: 1}}></Box> `done`</Box>           | Completed tasks, PRs or workflows                                         |
-| <Box sx={{display: 'inline-flex', alignContent: 'center', gap: '4px', verticalAlign: 'middle'}}><Box sx={{backgroundColor: 'sponsors.emphasis', height: '24px', width: '24px', borderRadius: 1}}></Box> `sponsors`</Box>   | Text and icons related to GitHub Sponsors                                 |
+| Color roles                                                                       | Usage                                                               |
+| :-------------------------------------------------------------------------------- | :------------------------------------------------------------------ |
+| <Box sx={{display: 'inline-flex', alignContent: 'center', gap: '4px', verticalAlign: 'middle'}}><Box sx={{backgroundColor: 'accent.emphasis', height: '24px', width: '24px', borderRadius: 1}}></Box> `accent`</Box> | Links, selected, active, and focus states, and neutral information |
+| <Box sx={{display: 'inline-flex', alignContent: 'center', gap: '4px', verticalAlign: 'middle'}}><Box sx={{backgroundColor: 'success.emphasis', height: '24px', width: '24px', borderRadius: 1}}></Box> `success`</Box>     | Primary buttons, positive messaging and successful states                                |
+| <Box sx={{display: 'inline-flex', alignContent: 'center', gap: '4px', verticalAlign: 'middle'}}><Box sx={{backgroundColor: 'attention.emphasis', height: '24px', width: '24px', borderRadius: 1}}></Box> `attention`</Box> | Warning states, active processes such as queued PRs and tests in progress   |
+| <Box sx={{display: 'inline-flex', alignContent: 'center', gap: '4px', verticalAlign: 'middle'}}><Box sx={{backgroundColor: 'danger.emphasis', height: '24px', width: '24px', borderRadius: 1}}></Box> `danger`</Box>       | Danger buttons and error states |
+| <Box sx={{display: 'inline-flex', alignContent: 'center', gap: '4px', verticalAlign: 'middle'}}><Box sx={{backgroundColor: 'open.emphasis', height: '24px', width: '24px', borderRadius: 1}}></Box> `open`</Box>           | Open tasks, PRs or workflows           |
+| <Box sx={{display: 'inline-flex', alignContent: 'center', gap: '4px', verticalAlign: 'middle'}}><Box sx={{backgroundColor: 'closed.emphasis', height: '24px', width: '24px', borderRadius: 1}}></Box> `closed`</Box>       | Closed tasks, PRs or workflows         |
+| <Box sx={{display: 'inline-flex', alignContent: 'center', gap: '4px', verticalAlign: 'middle'}}><Box sx={{backgroundColor: 'done.emphasis', height: '24px', width: '24px', borderRadius: 1}}></Box> `done`</Box>           | Completed tasks, PRs or workflows      |
+| <Box sx={{display: 'inline-flex', alignContent: 'center', gap: '4px', verticalAlign: 'middle'}}><Box sx={{backgroundColor: 'sponsors.emphasis', height: '24px', width: '24px', borderRadius: 1}}></Box> `sponsors`</Box>           | Text and icons related to GitHub Sponsors      |
+
 
 ## Developers
 

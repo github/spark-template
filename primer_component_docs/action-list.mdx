@@ -1,0 +1,348 @@
+---
+title: Action list
+reactId: action_list
+railsIds:
+- Primer::Alpha::ActionList
+figmaId: action_list
+description:
+  Action list is a vertical list of interactive actions or options. It's composed of items presented in a consistent,
+  single-column format, with room for icons, descriptions, side information, and other rich visuals.
+---
+
+import {Box, Button, Heading, Link} from '@primer/react'
+import ComponentLayout from '~/src/layouts/component-layout'
+export default ComponentLayout
+import {AccessibilityLink} from '~/src/components/accessibility-link'
+
+<ImageContainer>
+  <img
+    width="868"
+    src="https://user-images.githubusercontent.com/293280/125994797-430b8376-30f8-4971-b476-c5186f9ef6ca.png"
+    alt="Action list examples"
+    style="background: none"
+  />
+</ImageContainer>
+
+## Overview
+
+Action lists can have many applications:
+
+- They’re the foundation of [menus](/components/action-menu), [select panels](/components/selectpanel) and [nav lists](/components/nav-list).
+- They can be applied to page sidebars for showing individual actions, handling local navigation, and displaying metadata
+
+Action lists support section dividers and headers for grouping items, and individual item dividers for added clarity.
+
+Action lists use a mobile-friendly inset style. Their sizes are adapted on touch devices, and their single-column format should render consistently in any screen size.
+
+Items in an action list are generally interactive, and respond visually to `hover`, `active`, and `focus` states. Disabled and read-only items are also supported.
+
+## Anatomy
+
+An action list can be composed of:
+
+- Action list items
+- Item dividers
+- Section headers (subtle or filled styles)
+- Section dividers (subtle or filled styles)
+
+<img
+  src="https://user-images.githubusercontent.com/293280/125995889-12a2de9a-7e15-4638-87dd-6796a983f733.png"
+  alt="Action list anatomy"
+/>
+
+<img
+  src="https://user-images.githubusercontent.com/293280/125996049-e2af9cc7-c736-4adc-9800-a1d742b7929e.png"
+  alt="Action list item anatomy"
+/>
+
+## Options
+
+<Box display="grid" gridTemplateColumns={['1fr', null, null, null, '1fr 1fr']} gridGap={5}>
+<div>
+  <img
+    width="464"
+    alt=""
+    src="https://user-images.githubusercontent.com/293280/125997571-d8b92b5e-5241-4f33-b223-825335b18f3d.png"
+  />
+  <Caption>Use leading visuals to represent system sections, features, or options.</Caption>
+
+  <img
+    width="464"
+    alt=""
+    src="https://user-images.githubusercontent.com/293280/125997693-e0d9e379-19c1-4382-adbb-2a1882937373.png"
+  />
+  <Caption>Use leading visuals in important menu items.</Caption>
+
+  <img
+    width="464"
+    alt=""
+    src="https://user-images.githubusercontent.com/293280/125998871-9f51e402-2ccf-4e0a-9465-65d4956c630f.png"
+  />
+  <Caption>Use leading visuals to represent content types.</Caption>
+</div>
+
+<Box sx={{h3: {marginTop: 0}}}>
+
+### Leading visual
+
+Leading visuals are optional and appear at the start of an item. They can be octicons, avatars, and other custom visuals that fit a small area.
+
+When listing system sections, features, or options, use leading visuals to improve the items' scannability. In user-generated objects, they can help to indicate the item's content type and status.
+
+Depending on the context, displaying a leading visual may not be necessary. For example, a list of branches in a select panel may not need repeated icons if the surrounding UI provides enough hints about its content type.
+
+</Box>
+
+<div>
+  <img
+    width="464"
+    alt=""
+    src="https://user-images.githubusercontent.com/293280/125998961-24f90611-fe5f-4169-8943-eef68a6755a9.png"
+  />
+  <Caption>A right arrow as a trailing visual indicates there are more options to choose after selecting an item.</Caption>
+
+  <img
+    width="464"
+    alt=""
+    src="https://user-images.githubusercontent.com/293280/125999062-bc489a21-cdc6-455a-8363-b7c8c7faeb3a.png"
+  />
+  <Caption>Trailing text with custom styling to indicate diff change.</Caption>
+</div>
+
+<Box sx={{h3: {marginTop: 0}}}>
+
+### Trailing visual and trailing text
+
+Trailing visual and trailing text can display auxiliary information. They're placed at the right of the item, and can denote status, keyboard shortcuts, or be used to set expectations about what the action does.
+
+Note these side visuals don't have dedicated interaction targets.
+
+Use an [`arrow-right`](https://primer.style/octicons/arrow-right-16) octicon in menus to indicate the action will open more options, such as in a nested context. Use a [`pencil`](https://primer.style/octicons/pencil-16) octicon to indicate the item is going to be edited after clicking it.
+
+Custom trailing elements are supported, such as counters, labels, and other custom visuals that may help identify the item.
+
+When using a trailing text for displaying keyboard shortcuts, always confirm the characters match with the user's operating system. For example, to indicate a bold action in a Markdown toolbar, use "Ctrl+B" on Linux and Windows, and "⌘B" on Mac. <a href="https://support.apple.com/en-us/HT201236">See reference for Mac keyboard glyphs</a>.
+
+</Box>
+
+<img
+  width="464"
+  alt="Navigation list with an action button used to rerun a job, visible on hover."
+  src="https://user-images.githubusercontent.com/18661030/193155140-ae9cca41-280b-4cc2-a0c0-1a830b12b5c9.png"
+/>
+
+<Box sx={{h3: {marginTop: 0}}}>
+
+### Trailing actions
+
+Trailing action buttons can be used to present a secondary interaction related to the contents of the main item, such as opening a menu or dialog. They may appear when an item is hovered, and can be keyboard focused individually.
+
+</Box>
+
+<img
+  width="464"
+  alt="Multi-selection"
+  src="https://user-images.githubusercontent.com/293280/125998871-9f51e402-2ccf-4e0a-9465-65d4956c630f.png"
+/>
+
+<Box sx={{h3: {marginTop: 0}}}>
+
+### Item dividers
+
+Item dividers allow users to parse heavier amounts of information. They're placed between items and are useful in complex lists, particularly when descriptions or multi-line text is present.
+
+When considering whether to use item dividers, make sure they truly make the presented information easier to parse, instead of only increasing visual clutter.
+
+When using item dividers, increasing the action list item size may also help with legibility.
+
+</Box>
+
+<img
+  width="464"
+  alt="Selection"
+  src="https://user-images.githubusercontent.com/293280/125999347-c20e7d85-48ec-4a7e-9ecf-b5a52a033256.png"
+/>
+
+<Box sx={{h3: {marginTop: 0}}}>
+
+### Selection states
+
+Action list items support single select and multi-select. Selections are represented with a [`check`](https://primer.style/octicons/check-16) octicon placed at the beginning of the item.
+
+When listing selectable items alongside non-selectable items in a menu, use dividers to differentiate between the item types.
+
+Don't mix single select and multi-select of selections in the same list.
+
+</Box>
+
+<img
+  width="464"
+  alt="Action list item in danger variation"
+  src="https://user-images.githubusercontent.com/293280/125999384-b2a322db-8ec3-4a69-a414-10050544813b.png"
+/>
+
+<Box sx={{h3: {marginTop: 0}}}>
+
+### Danger items
+
+An action list item can have a special "danger" style, to be used in cases that require extra attention from the user.
+
+For destructive or irremediable actions, show a confirmation dialog for extra friction. If the action is not destructive, present the user a way to undo the action instead of asking for confirmation. <a href="https://alistapart.com/article/neveruseawarning/">Never use a warning when you mean undo</a>.
+
+Place danger items at the end of the list.
+</Box>
+
+<div>
+<img
+  width="464"
+  alt="An action list with the first item in an inactive state"
+  src="https://github.com/primer/design/assets/2313998/05c6199a-a0b1-4a11-beda-73203f38cabf"
+/>
+<img
+  width="464"
+  alt="An action list with the first item in an inactive state. A cursor is hovering the alert icon in the leading visual slot."
+  src="https://github.com/primer/design/assets/2313998/0d44f9fc-b219-43d7-8b81-a5baf93ada77"
+/>
+</div>
+
+<Box sx={{h3: {marginTop: 0}}}>
+
+### Inactive items
+
+Inactive action list item text still needs to meet an accessible color contrast ratio.
+
+It's required to show a tooltip with context about why the item is inactive. It should be triggered by the alert icon in the leading visual or trailing visual.
+
+If there's a leading visual, replace it with an alert icon.
+
+If there's *not* a leading visual, the alert icon is put in the same position as the trailing visual.
+
+See the [accessibility](#accessibility) section for information on the assistive technology user experience.
+
+</Box>
+
+<img
+  width="464"
+  alt="An action list with the first item in a loading state"
+  src="https://github.com/primer/design/assets/2313998/8811ddfa-1874-4a1d-a3ce-af39dd23bc62"
+/>
+<Box sx={{h3: {marginTop: 0}}}>
+
+### Loading items
+
+If an action list item is not yet interactive because the required data is still loading, it may be rendered in a loading state.
+
+The position of the loading icon depends on the same logic as where the alert icon goes in inactive items:
+
+If there's a leading visual, replace it with a loading indicator.
+
+If there's *not* a leading visual, the loading indicator is put in the same position as the trailing visual.
+
+</Box>
+
+</Box>
+
+## Responsive layout
+
+For information on responsive layout of an action list that is used in a sidebar, see the [responsive sidebar navigation patterns](/navigation#responsive-sidebar-navigation-patterns) section of our navigation guidelines for more information.
+
+## Examples
+
+<Box display="grid" gridTemplateColumns={['1fr', null, null, null, '1fr 2fr']} gridGap={4}>
+
+<a href="/components/action-menu">
+<img alt="Action menu" src="https://user-images.githubusercontent.com/980622/234046230-8ae1db9b-bcb9-436c-85f3-b55e02e4f2ac.png" />
+</a>
+
+<Box sx={{h3: {marginTop: 0}}}>
+
+### Action menu
+
+Action menus are a list of items, with each item representing an action, command, or current selection, which can be a single or multi-select.
+
+[Documentation](/components/action-menu)
+
+</Box>
+
+<a href="/components/selectpanel">
+<img
+  alt="Select panel"
+  src="https://user-images.githubusercontent.com/293280/123876997-4158f900-d8f1-11eb-85cb-461d9bbee0cb.png"
+/>
+</a>
+
+<Box sx={{h3: {marginTop: 0}}}>
+
+### Select panel
+
+Select panels allow manipulating long lists of options, with filtering and other advanced interactions. They can be used for single or multi-selection.
+
+[Documentation](/components/selectpanel)
+
+</Box>
+
+<a href="/components/nav-list">
+<img
+  alt="Select panel"
+  src="https://user-images.githubusercontent.com/980622/234065576-c4de31e0-e3e8-455f-bd5d-410a3dc6b9ec.png"
+/>
+</a>
+
+<Box sx={{h3: {marginTop: 0}}}>
+
+### Nav list
+
+A nav list organizes navigation links for the user's current context and indicates which view they're currently on. It is typically used as a sidebar that changes what is rendered in the main content area.
+
+[Documentation](/components/nav-list)
+
+</Box>
+
+</Box>
+
+## Accessibility
+
+### Conveying filter results to assistive technologies
+
+If an action list is being used to display a filtered list of options, a screen reader should announce when filtering is completed.
+
+For more information, see the [conveying status (filter results)](/ui-patterns/loading#filter-results) section of the loading state pattern guidelines.
+
+### Tooltips and dialogs on inactive items
+
+<Box
+  mb={3}
+  display="flex"
+  alignItems="flex-start"
+  justifyContent="space-between"
+  flexDirection={['column', 'column', 'column', 'column', 'row']}
+  sx={{gap: 3}}
+>
+
+<div>
+
+If an action list item is inactive, it will no longer be an `<a>` or `<button>`, so it will not be focusable.
+
+Having a tooltip on the leading visual is the only way to distinguish between the inactive items, and for keyboard-only screen reader users, it's the only way to see these are inactive.
+
+The tooltip and optional dialog should be triggered by a button element that wraps the leading visual.
+
+</div>
+
+<img
+    width="464"
+    alt="An action list with the first item in an inactive state. There is an annotation with HTML markup showing an SVG element wrapped in a button element."
+    src="https://github.com/primer/design/assets/2313998/181c60b1-4dc3-484d-a9d1-eb4fb14e55c2"
+/>
+
+</Box>
+
+### Inline descriptions
+
+All `ActionList.Description` are rendered inline (next to the label) by default. For the cases where the description is too long to fit within one line, the content will wrap to a new line. In some cases, it may be desired to have the description be truncated with an ellipsis. This can be achieved by setting the `truncate` prop on the `ActionList.Description` component. Please note that truncating an inline description is only acceptable if the full, non-truncated text can be seen in a subsequent page or screen. It is at the consumer's discretion to use this feature accessibily.
+
+Please note the `truncate` option is currently implemented in Primer React only, and is not available in Primer View Components, where the `InlineDescription` will wrap by default.
+
+### Known accessibility issues (GitHub staff only)
+
+<AccessibilityLink label="ActionList"/>
