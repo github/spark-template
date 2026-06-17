@@ -99,10 +99,9 @@
         "path-to-regexp": "8.4.0",
         "lodash": "4.18.0",
         "postcss": "8.5.10",
-        "esbuild": "^0.28.1",
-        "vite": "^7.3.5",
-        "js-yaml": "^4.2.0",
-        "qs": "^6.15.2",
+        "esbuild": "0.28.1",
+        "js-yaml": "4.2.0",
+        "qs": "6.15.2",
         "eslint": {
             "minimatch": "3.1.3"
         },
