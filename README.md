@@ -1,3 +1,6 @@
+> [!CAUTION]
+> GitHub Spark was deprecated on August 31, 2026. Please see https://github.blog/changelog/2026-08-04-upcoming-deprecation-of-github-spark-on-github-com/ for more details.
+
 # ✨ Welcome to Your Spark Template!
 You've just launched your brand-new Spark Template Codespace — everything’s fired up and ready for you to explore, build, and create with Spark!
 
